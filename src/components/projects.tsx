@@ -32,11 +32,8 @@ export function Projects() {
       </div>
       <div className="grid gap-6 md:grid-cols-3">
         {projects.map((project) => (
-          <a href={project.URL}>
-            <Card
-              key={project.title}
-              className="h-full transition hover:-translate-y-1"
-            >
+          <a key={project.title} href={project.URL}>
+            <Card className="h-full transition hover:-translate-y-1">
               <CardHeader>
                 <CardTitle>{project.title}</CardTitle>
                 <CardDescription>{project.detail}</CardDescription>
