@@ -8,18 +8,16 @@ import {
 
 const projects = [
   {
-    title: "Narrative Commerce",
+    URL: "https://cssgenerator-two.vercel.app/",
+    title: "CSS Generator",
     detail:
-      "A storefront concept that blends editorial layouts with quick checkout flow.",
+      "A web app to generate CSS code snippets for various styles and effects.",
   },
   {
-    title: "Atlas Studio",
+    URL: "https://typespeed-tester.vercel.app/",
+    title: "TypeSpeed Tester",
     detail:
-      "A modular brand system with typography-led landing pages and client portals.",
-  },
-  {
-    title: "Civic Signals",
-    detail: "A data storytelling hub focused on clarity and fast scanning.",
+      "An interactive typing speed test application to improve typing skills.",
   },
 ];
 
@@ -34,20 +32,22 @@ export function Projects() {
       </div>
       <div className="grid gap-6 md:grid-cols-3">
         {projects.map((project) => (
-          <Card
-            key={project.title}
-            className="h-full transition hover:-translate-y-1"
-          >
-            <CardHeader>
-              <CardTitle>{project.title}</CardTitle>
-              <CardDescription>{project.detail}</CardDescription>
-            </CardHeader>
-            <CardContent>
+          <a href={project.URL}>
+            <Card
+              key={project.title}
+              className="h-full transition hover:-translate-y-1"
+            >
+              <CardHeader>
+                <CardTitle>{project.title}</CardTitle>
+                <CardDescription>{project.detail}</CardDescription>
+              </CardHeader>
+              {/* <CardContent>
               <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
                 Case study in progress
               </span>
-            </CardContent>
-          </Card>
+            </CardContent> */}
+            </Card>
+          </a>
         ))}
       </div>
     </section>
