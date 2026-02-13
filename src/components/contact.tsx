@@ -50,15 +50,15 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden py-24"
+      className="relative isolate overflow-hidden py-24"
       aria-label="Contact"
     >
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
         <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
       </div>
 
-      <div className="mx-auto w-full max-w-5xl px-6">
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-6">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-start">
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
@@ -95,45 +95,45 @@ export function Contact() {
                 action="#"
               >
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Name
                     <input
                       name="name"
                       type="text"
                       required
                       placeholder="Your full name"
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     />
                   </label>
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Email
                     <input
                       name="email"
                       type="email"
                       required
                       placeholder="you@company.com"
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     />
                   </label>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Company
                     <input
                       name="company"
                       type="text"
                       placeholder="Company or team"
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     />
                   </label>
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Interested in
                     <select
                       name="interest"
                       required
                       defaultValue=""
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <option value="" disabled>
                         Choose one
@@ -147,12 +147,12 @@ export function Contact() {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Budget range
                     <select
                       name="budget"
                       defaultValue=""
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <option value="" disabled>
                         Select a range
@@ -164,11 +164,11 @@ export function Contact() {
                       <option value="custom">Custom amount</option>
                     </select>
                   </label>
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Timeline
                     <select
                       name="timeline"
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <option value="">Select timeline</option>
                       <option value="asap">ASAP</option>
@@ -179,36 +179,36 @@ export function Contact() {
                   </label>
                 </div>
 
-                <label className="grid gap-2 text-sm font-medium">
+                <label className="grid min-w-0 gap-2 text-sm font-medium">
                   Message
                   <textarea
                     name="message"
                     rows={5}
                     required
                     placeholder="What are you looking to build or who are you looking to hire?"
-                    className="rounded-lg border border-input bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="w-full rounded-lg border border-input bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   />
                 </label>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Preferred contact
                     <select
                       name="contact"
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <option value="email">Email</option>
                       <option value="phone">Phone</option>
                       <option value="either">Either</option>
                     </select>
                   </label>
-                  <label className="grid gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Phone (optional)
                     <input
                       name="phone"
                       type="tel"
                       placeholder="+1 000 000 0000"
-                      className="h-11 rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     />
                   </label>
                 </div>
