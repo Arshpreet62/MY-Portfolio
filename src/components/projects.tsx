@@ -30,19 +30,38 @@ export function Projects() {
           2025-2026
         </span>
       </div>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         {projects.map((project) => (
-          <a key={project.title} href={project.URL}>
-            <Card className="h-full transition hover:-translate-y-1">
-              <CardHeader>
-                <CardTitle>{project.title}</CardTitle>
-                <CardDescription>{project.detail}</CardDescription>
+          <a
+            key={project.title}
+            href={project.URL}
+            target="_blank"
+            rel="noreferrer"
+            className="group"
+            aria-label={`${project.title} live site`}
+          >
+            <Card className="h-full border-border/60 bg-card/80 shadow-lg shadow-black/5 transition duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-xl">
+              <CardHeader className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg text-foreground">
+                    {project.title}
+                  </CardTitle>
+                  <span className="rounded-full border border-border/60 bg-green-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white">
+                    Live
+                  </span>
+                </div>
               </CardHeader>
-              {/* <CardContent>
-              <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                Case study in progress
-              </span>
-            </CardContent> */}
+              <CardContent className="space-y-4">
+                <CardDescription className="text-sm leading-relaxed text-muted-foreground">
+                  {project.detail}
+                </CardDescription>
+                <span className="inline-flex items-center text-sm font-medium text-primary">
+                  View project
+                  <span className="ml-2 transition group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
+              </CardContent>
             </Card>
           </a>
         ))}
