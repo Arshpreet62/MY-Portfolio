@@ -62,7 +62,7 @@ export function Contact() {
         <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-start">
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Tell me about your project or role
+              Tell me about needed project or role
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
               Share a few details about what you need, your timeline, and how
@@ -71,11 +71,11 @@ export function Contact() {
             <div className="grid gap-4 text-sm text-muted-foreground sm:grid-cols-2">
               <div className="rounded-xl border border-border/50 bg-card/60 p-4">
                 <p className="font-medium text-foreground">Availability</p>
-                <p>Open for freelance and select full-time roles.</p>
+                <p>Open for freelance and full-time roles.</p>
               </div>
               <div className="rounded-xl border border-border/50 bg-card/60 p-4">
                 <p className="font-medium text-foreground">Focus</p>
-                <p>Product design, frontend engineering, and UX polish.</p>
+                <p>Web development with modern technologies.</p>
               </div>
             </div>
           </div>

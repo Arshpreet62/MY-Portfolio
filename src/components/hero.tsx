@@ -12,11 +12,11 @@ export function Hero() {
       </Badge>
       <div className="space-y-3">
         <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
-          Hi, I am a web developer that build websites that are both functional
-          and attractive.
+          Hi, I am Arshpreet, a web developer that build websites that are both
+          functional and attractive.
         </h1>
         <p className="max-w-2xl text-3xl text-muted-foreground">
-          I am based in Punjab, Mohali.
+          I am based in Mohali, Punjab.
         </p>
       </div>
       <div className="flex flex-wrap items-center gap-4">

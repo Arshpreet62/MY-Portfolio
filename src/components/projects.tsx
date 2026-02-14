@@ -46,9 +46,14 @@ export function Projects() {
                   <CardTitle className="text-lg text-foreground">
                     {project.title}
                   </CardTitle>
-                  <span className="rounded-full border border-border/60 bg-green-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white">
-                    Live
-                  </span>
+                  <div className="flex flex-row gap-2 ">
+                    <span className="rounded-full border border-border/60 bg-red-500 px-2.5 py-1 text-nowrap text-[11px] font-medium uppercase tracking-[0.2em] text-white">
+                      PC ONLY
+                    </span>
+                    <span className="rounded-full border border-border/60 bg-green-400 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white">
+                      Live
+                    </span>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
