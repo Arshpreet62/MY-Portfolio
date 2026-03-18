@@ -1,5 +1,11 @@
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Contact, Hero, Projects, TechStack } from "@/components/sections";
+import {
+  Contact,
+  Hero,
+  Projects,
+  TechStack,
+  VisitorCounter,
+} from "@/components/sections";
 
 export default function Home() {
   return (
@@ -9,6 +15,7 @@ export default function Home() {
           <ThemeToggle />
         </div>
         <Hero />
+        <VisitorCounter />
         <TechStack />
         <Projects />
         <Contact />

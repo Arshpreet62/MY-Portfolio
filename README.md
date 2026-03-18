@@ -12,6 +12,7 @@
 - 🎨 **Modern UI** - Clean, minimal design with smooth animations and gradient accents
 - 📱 **Fully Responsive** - Optimized for all devices (mobile, tablet, desktop)
 - 📧 **Contact Form** - Functional email integration with Nodemailer
+- 👀 **Visitor Counter** - Persistent total visitor count using MongoDB
 - 🎭 **Dark Mode Ready** - Theme system with CSS variables
 - ⚡ **Performance Optimized** - Built with Next.js 16 and Turbopack
 - 🔒 **Security Headers** - Pre-configured security headers for production
@@ -25,6 +26,7 @@
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) + CSS Variables
 - **UI Components:** [Radix UI](https://www.radix-ui.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **Email:** [Nodemailer](https://nodemailer.com/)
+- **Storage:** [MongoDB](https://www.mongodb.com/)
 - **Icons:** [Lucide React](https://lucide.dev/)
 - **Analytics:** [Vercel Analytics](https://vercel.com/analytics)
 - **Deployment:** [Vercel](https://vercel.com/)
@@ -137,11 +139,20 @@ MAIL_FROM=sender@example.com
 MAIL_TO=recipient@example.com
 ```
 
+### MongoDB (Visitor Counter)
+
+```bash
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.example.mongodb.net/?retryWrites=true&w=majority
+MONGODB_DB=portfolio
+```
+
+Create a MongoDB database (MongoDB Atlas or your own server), then copy these variables into `.env.local` for local testing and into your deployment environment settings for production.
+
 ### Rate Limiting
 
 - **Development:** 10 submissions per day per email + IP
 - **Production (Vercel):** Resets on function cold-start
-- **Recommended:** Use [Vercel KV](https://vercel.com/docs/storage/vercel-kv) or Redis for persistent rate limiting
+- **Recommended:** Use Redis or another shared datastore for persistent cross-instance rate limiting
 
 ## 🚢 Deployment
 
