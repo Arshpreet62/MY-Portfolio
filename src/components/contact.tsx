@@ -1,14 +1,103 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
+type FieldName = "name" | "email" | "interest" | "message";
+type FieldErrors = Partial<Record<FieldName, string>>;
+type FormDraft = Record<FieldName, string>;
+const fieldOrder: FieldName[] = ["name", "email", "interest", "message"];
+
+function getValue(payload: Record<string, FormDataEntryValue>, field: string) {
+  const value = payload[field];
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function validateForm(
+  payload: Record<string, FormDataEntryValue>,
+): FieldErrors {
+  const errors: FieldErrors = {};
+
+  const name = getValue(payload, "name");
+  const email = getValue(payload, "email");
+  const interest = getValue(payload, "interest");
+  const message = getValue(payload, "message");
+
+  if (name.length < 2) {
+    errors.name = "Please enter at least 2 characters for your name.";
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    errors.email = "Please enter a valid email address.";
+  }
+
+  if (!interest) {
+    errors.interest = "Please choose what you are interested in.";
+  }
+
+  if (message.length < 20) {
+    errors.message = "Please add at least 20 characters in your message.";
+  }
+
+  return errors;
+}
+
+function focusFirstInvalidField(form: HTMLFormElement, errors: FieldErrors) {
+  const firstInvalidField = fieldOrder.find((field) => Boolean(errors[field]));
+  if (!firstInvalidField) return;
+
+  const element = form.querySelector<
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  >(`[name="${firstInvalidField}"]`);
+
+  if (!element) return;
+
+  element.focus();
+  element.scrollIntoView({ behavior: "smooth", block: "center" });
+}
 
 export function Contact() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [message, setMessage] = useState<string>("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [formDraft, setFormDraft] = useState<FormDraft>({
+    name: "",
+    email: "",
+    interest: "",
+    message: "",
+  });
+
+  const draftErrors = validateForm({
+    name: formDraft.name,
+    email: formDraft.email,
+    interest: formDraft.interest,
+    message: formDraft.message,
+  });
+
+  const isFormValid = Object.keys(draftErrors).length === 0;
+  const missingFieldLabels: Record<FieldName, string> = {
+    name: "Name",
+    email: "Email",
+    interest: "Interested in",
+    message: "Message",
+  };
+  const missingFieldsText = fieldOrder
+    .filter((field) => Boolean(draftErrors[field]))
+    .map((field) => missingFieldLabels[field])
+    .join(", ");
+
+  const clearFieldError = (field: FieldName) => {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,6 +109,24 @@ export function Contact() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
+
+    const validationErrors = validateForm(payload);
+    if (Object.keys(validationErrors).length > 0) {
+      focusFirstInvalidField(form, validationErrors);
+      track("contact_validation_failed", {
+        fields: Object.keys(validationErrors).join(","),
+      });
+      setFieldErrors(validationErrors);
+      setStatus("error");
+      setMessage("Please fix the highlighted fields and try again.");
+      return;
+    }
+
+    setFieldErrors({});
+    track("contact_submit_attempt", {
+      interest: getValue(payload, "interest") || "unknown",
+      preferredContact: getValue(payload, "contact") || "email",
+    });
 
     try {
       const response = await fetch("/api/mail", {
@@ -33,15 +140,31 @@ export function Contact() {
       const data = await response.json().catch(() => null);
 
       if (!response.ok) {
+        track("contact_submit_failed", {
+          statusCode: response.status,
+        });
         setStatus("error");
         setMessage(data?.error || "Something went wrong. Please try again.");
         return;
       }
 
+      track("contact_submit_success", {
+        interest: getValue(payload, "interest") || "unknown",
+      });
       setStatus("success");
       setMessage("Thanks for reaching out. I will get back to you soon.");
+      setFieldErrors({});
+      setFormDraft({
+        name: "",
+        email: "",
+        interest: "",
+        message: "",
+      });
       form.reset();
     } catch (error) {
+      track("contact_submit_error", {
+        type: "network_or_server",
+      });
       setStatus("error");
       setMessage("Unable to send message right now. Please try again later.");
     }
@@ -50,7 +173,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative isolate overflow-hidden py-24"
+      className="relative isolate overflow-hidden py-24 reveal-on-load reveal-delay-3 scroll-mt-24"
       aria-label="Contact"
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -102,8 +225,29 @@ export function Contact() {
                       type="text"
                       required
                       placeholder="Your full name"
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      onInput={() => clearFieldError("name")}
+                      onChange={(event) =>
+                        setFormDraft((prev) => ({
+                          ...prev,
+                          name: event.target.value,
+                        }))
+                      }
+                      aria-invalid={Boolean(fieldErrors.name)}
+                      aria-describedby={
+                        fieldErrors.name ? "contact-name-error" : undefined
+                      }
+                      className={`h-11 w-full rounded-lg border bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        fieldErrors.name ? "border-destructive" : "border-input"
+                      }`}
                     />
+                    {fieldErrors.name && (
+                      <span
+                        id="contact-name-error"
+                        className="text-xs text-destructive"
+                      >
+                        {fieldErrors.name}
+                      </span>
+                    )}
                   </label>
                   <label className="grid min-w-0 gap-2 text-sm font-medium">
                     Email
@@ -112,8 +256,31 @@ export function Contact() {
                       type="email"
                       required
                       placeholder="you@company.com"
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      onInput={() => clearFieldError("email")}
+                      onChange={(event) =>
+                        setFormDraft((prev) => ({
+                          ...prev,
+                          email: event.target.value,
+                        }))
+                      }
+                      aria-invalid={Boolean(fieldErrors.email)}
+                      aria-describedby={
+                        fieldErrors.email ? "contact-email-error" : undefined
+                      }
+                      className={`h-11 w-full rounded-lg border bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        fieldErrors.email
+                          ? "border-destructive"
+                          : "border-input"
+                      }`}
                     />
+                    {fieldErrors.email && (
+                      <span
+                        id="contact-email-error"
+                        className="text-xs text-destructive"
+                      >
+                        {fieldErrors.email}
+                      </span>
+                    )}
                   </label>
                 </div>
 
@@ -133,7 +300,24 @@ export function Contact() {
                       name="interest"
                       required
                       defaultValue=""
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      onChange={(event) => {
+                        clearFieldError("interest");
+                        setFormDraft((prev) => ({
+                          ...prev,
+                          interest: event.target.value,
+                        }));
+                      }}
+                      aria-invalid={Boolean(fieldErrors.interest)}
+                      aria-describedby={
+                        fieldErrors.interest
+                          ? "contact-interest-error"
+                          : undefined
+                      }
+                      className={`h-11 w-full rounded-lg border bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        fieldErrors.interest
+                          ? "border-destructive"
+                          : "border-input"
+                      }`}
                     >
                       <option value="" disabled>
                         Choose one
@@ -143,6 +327,14 @@ export function Contact() {
                       <option value="collab">Collaboration</option>
                       <option value="other">Something else</option>
                     </select>
+                    {fieldErrors.interest && (
+                      <span
+                        id="contact-interest-error"
+                        className="text-xs text-destructive"
+                      >
+                        {fieldErrors.interest}
+                      </span>
+                    )}
                   </label>
                 </div>
 
@@ -186,8 +378,40 @@ export function Contact() {
                     rows={5}
                     required
                     placeholder="What are you looking to build or who are you looking to hire?"
-                    className="w-full rounded-lg border border-input bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    onInput={() => clearFieldError("message")}
+                    onChange={(event) =>
+                      setFormDraft((prev) => ({
+                        ...prev,
+                        message: event.target.value,
+                      }))
+                    }
+                    aria-invalid={Boolean(fieldErrors.message)}
+                    aria-describedby={
+                      fieldErrors.message ? "contact-message-error" : undefined
+                    }
+                    className={`w-full rounded-lg border bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                      fieldErrors.message
+                        ? "border-destructive"
+                        : "border-input"
+                    }`}
                   />
+                  {fieldErrors.message && (
+                    <span
+                      id="contact-message-error"
+                      className="text-xs text-destructive"
+                    >
+                      {fieldErrors.message}
+                    </span>
+                  )}
+                  <span
+                    className={`text-xs ${
+                      formDraft.message.trim().length >= 20
+                        ? "text-emerald-600"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {formDraft.message.trim().length}/20 characters minimum
+                  </span>
                 </label>
 
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -217,14 +441,26 @@ export function Contact() {
                   <Button
                     type="submit"
                     className="h-11 px-6"
-                    disabled={status === "loading"}
+                    disabled={status === "loading" || !isFormValid}
                   >
-                    {status === "loading" ? "Sending..." : "Send message"}
+                    {status === "loading"
+                      ? "Sending..."
+                      : isFormValid
+                        ? "Send message"
+                        : "Complete required fields"}
                   </Button>
                   <span className="text-xs text-muted-foreground">
                     By submitting, you agree to be contacted about your inquiry.
                   </span>
                 </div>
+                {!isFormValid && status !== "loading" && (
+                  <p
+                    className="text-xs text-muted-foreground"
+                    aria-live="polite"
+                  >
+                    Missing or invalid: {missingFieldsText}
+                  </p>
+                )}
                 <p
                   className={`text-sm ${
                     status === "error" ? "text-destructive" : "text-emerald-500"

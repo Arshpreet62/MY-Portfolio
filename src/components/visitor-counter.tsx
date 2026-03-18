@@ -31,10 +31,10 @@ export function VisitorCounter() {
   }, []);
 
   return (
-    <div className="inline-flex w-fit items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1.5 text-sm text-muted-foreground backdrop-blur">
+    <div className="inline-flex shrink-0 items-center gap-2.5 rounded-full border border-border/60 bg-background/70 px-3.5 py-2 text-xs text-muted-foreground backdrop-blur">
       <Eye className="h-4 w-4" aria-hidden="true" />
-      <span className="uppercase tracking-[0.2em] text-[10px]">Visitors</span>
-      <span className="font-semibold text-foreground">
+      <span className="uppercase tracking-[0.2em] text-[11px]">Visitors</span>
+      <span className="min-w-[3ch] text-right font-semibold tabular-nums text-foreground">
         {isError
           ? "N/A"
           : count === null

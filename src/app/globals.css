@@ -86,4 +86,31 @@
         transparent 60%
       );
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-on-load {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: reveal-up 500ms ease-out forwards;
+    }
+
+    .reveal-delay-1 {
+      animation-delay: 80ms;
+    }
+
+    .reveal-delay-2 {
+      animation-delay: 140ms;
+    }
+
+    .reveal-delay-3 {
+      animation-delay: 200ms;
+    }
+  }
+
+  @keyframes reveal-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }

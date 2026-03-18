@@ -13,7 +13,7 @@ const stacks = [
 
 export function TechStack() {
   return (
-    <section className="space-y-6">
+    <section id="tech-stack" className="space-y-6 scroll-mt-24">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>
         <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
