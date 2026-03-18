@@ -17,6 +17,8 @@ export function ScrollProgress() {
   const [activeId, setActiveId] = useState("hero");
 
   useEffect(() => {
+    let rafId: number | null = null;
+
     const updateBySections = () => {
       const sections = navItems
         .map((item) => document.getElementById(item.id))
@@ -60,13 +62,24 @@ export function ScrollProgress() {
       setActiveId(sections[activeIndex].id);
     };
 
+    const scheduleUpdate = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        updateBySections();
+      });
+    };
+
     updateBySections();
-    window.addEventListener("scroll", updateBySections, { passive: true });
-    window.addEventListener("resize", updateBySections);
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
 
     return () => {
-      window.removeEventListener("scroll", updateBySections);
-      window.removeEventListener("resize", updateBySections);
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
     };
   }, []);
 

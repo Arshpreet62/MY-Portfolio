@@ -66,7 +66,7 @@ export default function RootLayout({
           inter.variable,
         )}
       >
-        <div className="fixed inset-0 -z-10 w-full h-screen">
+        <div className="fixed inset-0 -z-10 w-full h-full">
           <DarkVeil
             hueShift={0}
             noiseIntensity={0}

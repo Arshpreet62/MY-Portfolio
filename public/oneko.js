@@ -1,6 +1,10 @@
 // oneko.js: https://github.com/adryd325/oneko.js
 
 (function oneko() {
+  if (window.__onekoCleanup) {
+    window.__onekoCleanup();
+  }
+
   const isReducedMotion =
     window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
     window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
@@ -160,39 +164,18 @@
       mousePosY = homePos.y;
     };
 
-    document.addEventListener("mousemove", function (event) {
+    const onMouseMove = function (event) {
       mousePosX = event.clientX;
       mousePosY = event.clientY;
-    });
+    };
 
-    document.addEventListener("mouseleave", sendPetHome);
-    window.addEventListener("blur", sendPetHome);
-    document.addEventListener("visibilitychange", function () {
+    const onVisibilityChange = function () {
       if (document.visibilityState !== "visible") {
         sendPetHome();
       }
-    });
+    };
 
-    if (persistPosition) {
-      window.addEventListener("beforeunload", function (event) {
-        window.localStorage.setItem(
-          "oneko",
-          JSON.stringify({
-            nekoPosX: nekoPosX,
-            nekoPosY: nekoPosY,
-            mousePosX: mousePosX,
-            mousePosY: mousePosY,
-            frameCount: frameCount,
-            idleTime: idleTime,
-            idleAnimation: idleAnimation,
-            idleAnimationFrame: idleAnimationFrame,
-            bgPos: nekoEl.style.backgroundPosition,
-          }),
-        );
-      });
-    }
-
-    window.addEventListener("resize", function () {
+    const onResize = function () {
       const homePos = getHomePosition();
       // Only move cat back home if they're far from their last position
       const distance = Math.hypot(homePos.x - nekoPosX, homePos.y - nekoPosY);
@@ -200,7 +183,51 @@
         nekoPosX = homePos.x;
         nekoPosY = homePos.y;
       }
-    });
+    };
+
+    const onBeforeUnload = function () {
+      window.localStorage.setItem(
+        "oneko",
+        JSON.stringify({
+          nekoPosX: nekoPosX,
+          nekoPosY: nekoPosY,
+          mousePosX: mousePosX,
+          mousePosY: mousePosY,
+          frameCount: frameCount,
+          idleTime: idleTime,
+          idleAnimation: idleAnimation,
+          idleAnimationFrame: idleAnimationFrame,
+          bgPos: nekoEl.style.backgroundPosition,
+        }),
+      );
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+
+    document.addEventListener("mouseleave", sendPetHome);
+    window.addEventListener("blur", sendPetHome);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    if (persistPosition) {
+      window.addEventListener("beforeunload", onBeforeUnload);
+    }
+
+    window.addEventListener("resize", onResize);
+
+    window.__onekoCleanup = function () {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseleave", sendPetHome);
+      window.removeEventListener("blur", sendPetHome);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("resize", onResize);
+      if (persistPosition) {
+        window.removeEventListener("beforeunload", onBeforeUnload);
+      }
+      if (nekoEl.isConnected) {
+        nekoEl.remove();
+      }
+      window.__onekoCleanup = null;
+    };
 
     window.requestAnimationFrame(onAnimationFrame);
   }

@@ -11,6 +11,15 @@ export function CursorPet() {
 
     if (!canTrack) return;
 
+    const w = window as Window & { __onekoCleanup?: (() => void) | null };
+
+    // If already active (e.g. route remount), don't inject again.
+    if (w.__onekoCleanup) {
+      return () => {
+        w.__onekoCleanup?.();
+      };
+    }
+
     // Load oneko.js script
     const script = document.createElement("script");
     script.src = "/oneko.js";
@@ -18,10 +27,9 @@ export function CursorPet() {
     document.body.appendChild(script);
 
     return () => {
-      // Cleanup: remove oneko element if it exists
-      const onekoEl = document.getElementById("oneko");
-      if (onekoEl) {
-        onekoEl.remove();
+      w.__onekoCleanup?.();
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
       }
     };
   }, []);

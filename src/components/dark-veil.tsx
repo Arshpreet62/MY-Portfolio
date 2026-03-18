@@ -99,11 +99,33 @@ export function DarkVeil({
     const canvas = ref.current;
     if (!canvas) return;
 
+    const applyThemeFilter = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      canvas.style.filter = isDark ? "none" : "invert(1)";
+    };
+
+    applyThemeFilter();
+
+    const observer = new MutationObserver(applyThemeFilter);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+
     const parent = canvas.parentElement;
     if (!parent) return;
 
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: Math.min(window.devicePixelRatio, 1.25),
       canvas,
     });
 
@@ -129,8 +151,12 @@ export function DarkVeil({
     const resize = () => {
       const w = parent.clientWidth;
       const h = parent.clientHeight;
-      renderer.setSize(w * resolutionScale, h * resolutionScale);
-      program.uniforms.uResolution.value.set(w, h);
+      const targetW = Math.max(1, Math.floor(w * resolutionScale));
+      const targetH = Math.max(1, Math.floor(h * resolutionScale));
+      renderer.setSize(targetW, targetH);
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      program.uniforms.uResolution.value.set(targetW, targetH);
     };
 
     window.addEventListener("resize", resize);
@@ -138,8 +164,14 @@ export function DarkVeil({
 
     const start = performance.now();
     let frame = 0;
+    let paused = document.visibilityState !== "visible";
 
     const loop = () => {
+      if (paused) {
+        frame = requestAnimationFrame(loop);
+        return;
+      }
+
       program.uniforms.uTime.value =
         ((performance.now() - start) / 1000) * speed;
       program.uniforms.uHueShift.value = hueShift;
@@ -151,11 +183,21 @@ export function DarkVeil({
       frame = requestAnimationFrame(loop);
     };
 
+    const onVisibilityChange = () => {
+      paused = document.visibilityState !== "visible";
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     loop();
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+
+      const loseContext = gl.getExtension("WEBGL_lose_context");
+      loseContext?.loseContext();
     };
   }, [
     hueShift,
