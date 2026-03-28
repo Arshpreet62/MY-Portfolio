@@ -14,8 +14,10 @@ export function SocialLinks() {
       className="flex flex-col gap-6 scroll-mt-24"
       aria-label="Social links"
     >
-      <h2 className="text-2xl font-semibold tracking-tight">Connect with me</h2>
-      <div className="rounded-2xl border border-border/60 bg-card/50 p-6  sm:p-8">
+      <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+        Connect with me
+      </h2>
+      <div className="rounded-2xl border border-border/60 bg-card/50 p-6 sm:p-7">
         <p className="mt-2 text-sm text-muted-foreground">
           You can find my work and professional profile here.
         </p>

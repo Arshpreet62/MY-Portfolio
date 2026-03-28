@@ -66,8 +66,8 @@ export default async function ProjectDetailsPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <main className="px-6 py-16 md:px-12 lg:px-20">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
+    <main className="px-6 py-8 md:px-12 lg:px-20">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
         <div className="flex items-center justify-between gap-3">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             {project.title}
@@ -113,14 +113,14 @@ export default async function ProjectDetailsPage({ params }: ProjectPageProps) {
           </div>
         </a>
 
-        <section className="space-y-2">
+        <section className="space-y-3">
           <h2 className="text-lg font-semibold">Problem</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
             {project.problem}
           </p>
         </section>
 
-        <section className="space-y-2">
+        <section className="space-y-3">
           <h2 className="text-lg font-semibold">Approach</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
             {project.approach}
@@ -145,7 +145,7 @@ export default async function ProjectDetailsPage({ params }: ProjectPageProps) {
           </ul>
         </section>
 
-        <section className="space-y-2">
+        <section className="space-y-3">
           <h2 className="text-lg font-semibold">Outcome</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
             {project.outcome}

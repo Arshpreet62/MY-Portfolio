@@ -1,6 +1,6 @@
 "use client";
 
-import { CloudMoon, Search, Sun } from "lucide-react";
+import { CloudMoon, Github, Linkedin, Search, Sun } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -128,7 +128,7 @@ export function SiteNav() {
 
   return (
     <header className="sticky top-0.5 z-40">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between rounded-2xl border border-border/60 bg-background/85 px-3 py-2 shadow-sm backdrop-blur md:px-4">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between rounded-2xl border border-border/60 bg-background/85 px-3 py-2 shadow-sm shadow-black/5 backdrop-blur md:px-4">
         <div className="flex items-center gap-2 md:gap-3">
           <Link
             href="#hero"
@@ -171,6 +171,26 @@ export function SiteNav() {
               Download Resume
             </Button>
           </a>
+          <div className="hidden items-center gap-1 rounded-full border border-border/60 bg-background/70 p-1 sm:flex">
+            <a
+              href="https://www.linkedin.com/in/arshpreet-singh-8860b8370"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full p-1.5 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+              aria-label="Open LinkedIn profile"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href="https://github.com/Arshpreet62"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full p-1.5 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+              aria-label="Open GitHub profile"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+          </div>
           <ThemeToggle />
         </div>
       </div>

@@ -249,7 +249,9 @@ export function NavIdeasLab() {
   return (
     <section id="nav-ideas" className="space-y-6">
       <div className="space-y-2">
-        <h2 className="text-2xl font-semibold">Top Nav Idea Lab (Temporary)</h2>
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          Top Nav Idea Lab (Temporary)
+        </h2>
         <p className="text-sm text-muted-foreground">
           Check these live previews and tell me the option number that feels
           right.

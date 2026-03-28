@@ -2,6 +2,13 @@
 
 import { track } from "@vercel/analytics";
 import { useState, type FormEvent } from "react";
+import {
+  CheckCircle2,
+  Clock3,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,7 +24,16 @@ import { Textarea } from "@/components/ui/textarea";
 type FormStatus = "idle" | "loading" | "success" | "error";
 type FieldName = "name" | "email" | "interest" | "message";
 type FieldErrors = Partial<Record<FieldName, string>>;
-type FormDraft = Record<FieldName, string>;
+type FormDraft = {
+  name: string;
+  email: string;
+  interest: string;
+  message: string;
+  company: string;
+  budget: string;
+  timeline: string;
+  phone: string;
+};
 const fieldOrder: FieldName[] = ["name", "email", "interest", "message"];
 
 function suggestEmailDomain(value: string) {
@@ -99,6 +115,10 @@ export function Contact() {
     email: "",
     interest: "",
     message: "",
+    company: "",
+    budget: "",
+    timeline: "",
+    phone: "",
   });
 
   const draftErrors = validateForm({
@@ -119,6 +139,13 @@ export function Contact() {
     .filter((field) => Boolean(draftErrors[field]))
     .map((field) => missingFieldLabels[field]);
 
+  const completionScore =
+    (Number(formDraft.name.trim().length >= 2) +
+      Number(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formDraft.email.trim())) +
+      Number(Boolean(formDraft.interest)) +
+      Number(formDraft.message.trim().length >= 20)) *
+    25;
+
   const clearFieldError = (field: FieldName) => {
     setFieldErrors((prev) => {
       if (!prev[field]) return prev;
@@ -136,8 +163,16 @@ export function Contact() {
     setMessage("");
 
     const form = event.currentTarget;
-    const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
+    const payload: Record<string, FormDataEntryValue> = {
+      name: formDraft.name,
+      email: formDraft.email,
+      interest: formDraft.interest,
+      message: formDraft.message,
+      company: formDraft.company,
+      budget: formDraft.budget,
+      timeline: formDraft.timeline,
+      phone: formDraft.phone,
+    };
 
     const validationErrors = validateForm(payload);
     if (Object.keys(validationErrors).length > 0) {
@@ -187,9 +222,12 @@ export function Contact() {
         email: "",
         interest: "",
         message: "",
+        company: "",
+        budget: "",
+        timeline: "",
+        phone: "",
       });
-      form.reset();
-    } catch (error) {
+    } catch {
       track("contact_submit_error", {
         type: "network_or_server",
       });
@@ -201,87 +239,93 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative isolate rounded-lg overflow-hidden py-16 reveal-on-load reveal-delay-3 scroll-mt-24"
+      className="relative isolate overflow-hidden py-8 rounded-lg reveal-on-load reveal-delay-3 px-5 scroll-mt-24"
       aria-label="Contact"
     >
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-90">
+        <div className="absolute -right-12 -top-10 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl dark:bg-cyan-500/20" />
+        <div className="absolute -bottom-14 -left-10 h-72 w-72 rounded-full bg-lime-400/15 blur-3xl dark:bg-emerald-500/20" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-4xl px-6">
-        <div className="grid gap-7 lg:grid-cols-[1fr_1fr] lg:items-stretch">
-          <div className=" p-6  md:p-7">
+      <div className="relative z-10 w-full">
+        <div className="grid gap-6 lg:grid-cols-[1fr_1.05fr] lg:items-stretch">
+          <div className="rounded-2xl border border-border/60 bg-card/50 p-6 shadow-lg shadow-black/5 backdrop-blur md:p-7">
             <div className="space-y-6">
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Looking forward to hearing from you
-              </h2>
-              <p className="text-lg leading-relaxed text-muted-foreground">
-                Thank you for considering my profile. I would be glad to learn
-                about your requirements and discuss how I can contribute to your
-                team or project.
-              </p>
-              <div className="space-y-2">
-                <p className="text-base font-semibold uppercase tracking-wide text-foreground/80">
-                  What I offer
-                </p>
-                <p className="text-base text-muted-foreground">
-                  End-to-end product thinking with strong execution to help you
-                  ship confidently.
-                </p>
+              <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-cyan-300" />
+                Contact
               </div>
-              <div className="grid gap-4 text-base text-muted-foreground">
-                <div className="rounded-xl border border-border/50 bg-card/60 p-4">
-                  <p className="font-medium text-foreground">Product Design</p>
+              <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                Let&apos;s build something
+                <span className="bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent dark:from-lime-300 dark:to-cyan-300">
+                  {" "}
+                  remarkable
+                </span>
+              </h2>
+              <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Share your goals, constraints, and timeline. I&apos;ll help
+                shape a practical plan and deliver a product that feels
+                polished, performant, and production-ready.
+              </p>
+
+              <div className="grid gap-3 text-sm text-muted-foreground">
+                <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/60 p-3">
+                  <Rocket className="mt-0.5 h-4 w-4 text-emerald-600 dark:text-cyan-300" />
+                  <p>End-to-end execution from UX to API and deployment.</p>
+                </div>
+                <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/60 p-3">
+                  <ShieldCheck className="mt-0.5 h-4 w-4 text-emerald-600 dark:text-cyan-300" />
                   <p>
-                    User-focused interface design, wireframes, and practical UX
-                    decisions that support business goals.
+                    Reliable architecture with maintainable, team-friendly code.
                   </p>
                 </div>
-                <div className="rounded-xl border border-border/50 bg-card/60 p-4">
-                  <p className="font-medium text-foreground">
-                    Frontend Development
-                  </p>
-                  <p>
-                    Clean, responsive React and Next.js applications with
-                    maintainable architecture and polished UI quality.
-                  </p>
+                <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/60 p-3">
+                  <Clock3 className="mt-0.5 h-4 w-4 text-emerald-600 dark:text-cyan-300" />
+                  <p>Fast communication and clear milestone-based delivery.</p>
                 </div>
-                <div className="rounded-xl border border-border/50 bg-card/60 p-4">
-                  <p className="font-medium text-foreground">
-                    API Integration and Performance
-                  </p>
-                  <p>
-                    Reliable API integrations, optimization, and production
-                    readiness to deliver fast, stable, and scalable products.
-                  </p>
-                </div>
+              </div>
+
+              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-900 dark:border-cyan-400/30 dark:bg-cyan-400/10 dark:text-cyan-100">
+                Typical response time: within 24 hours.
               </div>
             </div>
           </div>
 
-          <Card className="h-full rounded-2xl border-border/60 bg-background/80 shadow-xl shadow-black/5 backdrop-blur">
-            <CardHeader className="space-y-1 rounded-t-2xl border-b border-border/40 bg-card/30">
-              <CardTitle className="text-2xl">Send a message</CardTitle>
-              <p className="text-base text-muted-foreground">
+          <Card className="h-full rounded-2xl border-border/60 bg-background/85 shadow-xl shadow-black/10 backdrop-blur">
+            <CardHeader className="space-y-2.5 rounded-t-2xl border-b border-border/40 bg-card/30 p-5">
+              <CardTitle className="text-xl">Send a message</CardTitle>
+              <p className="text-sm text-muted-foreground sm:text-base">
                 The more context you share, the better I can help.
               </p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  <span>Form completeness</span>
+                  <span>{completionScore}%</span>
+                </div>
+                <div className="h-2 overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all"
+                    style={{ width: `${completionScore}%` }}
+                  />
+                </div>
+              </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-5 pt-0">
               <form
-                className="grid gap-5"
+                className="grid gap-3"
                 onSubmit={handleSubmit}
                 method="post"
                 action="#"
               >
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-base font-medium">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                     Name
                     <Input
                       name="name"
                       type="text"
                       required
                       placeholder="Your full name"
+                      value={formDraft.name}
                       onInput={() => clearFieldError("name")}
                       onChange={(event) =>
                         setFormDraft((prev) => ({
@@ -293,7 +337,7 @@ export function Contact() {
                       aria-describedby={
                         fieldErrors.name ? "contact-name-error" : undefined
                       }
-                      className={`bg-background/80 ${
+                      className={`h-10 rounded-xl bg-background/80 ${
                         fieldErrors.name ? "border-destructive" : "border-input"
                       }`}
                     />
@@ -306,7 +350,7 @@ export function Contact() {
                       </span>
                     )}
                   </label>
-                  <label className="grid min-w-0 gap-2 text-base font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                     Email
                     <Input
                       name="email"
@@ -337,7 +381,7 @@ export function Contact() {
                       aria-describedby={
                         fieldErrors.email ? "contact-email-error" : undefined
                       }
-                      className={`bg-background/80 ${
+                      className={`h-10 rounded-xl bg-background/80 ${
                         fieldErrors.email
                           ? "border-destructive"
                           : "border-input"
@@ -354,17 +398,24 @@ export function Contact() {
                   </label>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-base font-medium">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                     Company
                     <Input
                       name="company"
                       type="text"
                       placeholder="Company or team"
-                      className="bg-background/80"
+                      value={formDraft.company}
+                      onChange={(event) =>
+                        setFormDraft((prev) => ({
+                          ...prev,
+                          company: event.target.value,
+                        }))
+                      }
+                      className="h-10 rounded-xl bg-background/80"
                     />
                   </label>
-                  <label className="grid min-w-0 gap-2 text-base font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                     Interested in
                     <Select
                       name="interest"
@@ -386,7 +437,7 @@ export function Contact() {
                             ? "contact-interest-error"
                             : undefined
                         }
-                        className={`bg-background/80 ${
+                        className={`h-10 rounded-xl bg-background/80 ${
                           fieldErrors.interest
                             ? "border-destructive"
                             : "border-input"
@@ -414,11 +465,20 @@ export function Contact() {
                   </label>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-base font-medium">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                     Budget range
-                    <Select name="budget">
-                      <SelectTrigger className="bg-background/80">
+                    <Select
+                      name="budget"
+                      value={formDraft.budget}
+                      onValueChange={(value) =>
+                        setFormDraft((prev) => ({
+                          ...prev,
+                          budget: value,
+                        }))
+                      }
+                    >
+                      <SelectTrigger className="h-10 rounded-xl bg-background/80">
                         <SelectValue placeholder="Select a range" />
                       </SelectTrigger>
                       <SelectContent>
@@ -430,10 +490,19 @@ export function Contact() {
                       </SelectContent>
                     </Select>
                   </label>
-                  <label className="grid min-w-0 gap-2 text-base font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                     Timeline
-                    <Select name="timeline">
-                      <SelectTrigger className="bg-background/80">
+                    <Select
+                      name="timeline"
+                      value={formDraft.timeline}
+                      onValueChange={(value) =>
+                        setFormDraft((prev) => ({
+                          ...prev,
+                          timeline: value,
+                        }))
+                      }
+                    >
+                      <SelectTrigger className="h-10 rounded-xl bg-background/80">
                         <SelectValue placeholder="Select timeline" />
                       </SelectTrigger>
                       <SelectContent>
@@ -446,13 +515,14 @@ export function Contact() {
                   </label>
                 </div>
 
-                <label className="grid min-w-0 gap-2 text-base font-medium">
+                <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                   Message
                   <Textarea
                     name="message"
                     rows={5}
                     required
                     placeholder="What are you looking to build or who are you looking to hire?"
+                    value={formDraft.message}
                     onInput={() => clearFieldError("message")}
                     onChange={(event) =>
                       setFormDraft((prev) => ({
@@ -464,7 +534,7 @@ export function Contact() {
                     aria-describedby={
                       fieldErrors.message ? "contact-message-error" : undefined
                     }
-                    className={`bg-background/80 ${
+                    className={`min-h-[126px] rounded-xl bg-background/80 ${
                       fieldErrors.message
                         ? "border-destructive"
                         : "border-input"
@@ -479,9 +549,9 @@ export function Contact() {
                     </span>
                   )}
                   <span
-                    className={`text-sm ${
+                    className={`text-xs uppercase tracking-[0.16em] ${
                       formDraft.message.trim().length >= 20
-                        ? "text-emerald-600"
+                        ? "text-emerald-600 dark:text-cyan-300"
                         : "text-muted-foreground"
                     }`}
                   >
@@ -490,13 +560,20 @@ export function Contact() {
                 </label>
 
                 <div className="grid gap-4">
-                  <label className="grid min-w-0 gap-2 text-base font-medium">
+                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
                     Phone (optional)
                     <Input
                       name="phone"
                       type="tel"
                       placeholder="+1 000 000 0000"
-                      className="bg-background/80"
+                      value={formDraft.phone}
+                      onChange={(event) =>
+                        setFormDraft((prev) => ({
+                          ...prev,
+                          phone: event.target.value,
+                        }))
+                      }
+                      className="h-10 rounded-xl bg-background/80"
                     />
                   </label>
                 </div>
@@ -504,7 +581,7 @@ export function Contact() {
                 <div className="flex flex-wrap items-center gap-3">
                   <Button
                     type="submit"
-                    className="h-12 px-7 text-base"
+                    className="h-11 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 px-6 text-sm text-white shadow-lg hover:opacity-95"
                     disabled={status === "loading" || !isFormValid}
                   >
                     {status === "loading"
@@ -513,13 +590,13 @@ export function Contact() {
                         ? "Send message"
                         : "Complete required fields"}
                   </Button>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs text-muted-foreground sm:text-sm">
                     By submitting, you agree to be contacted about your inquiry.
                   </span>
                 </div>
                 {!isFormValid && status !== "loading" && (
                   <div
-                    className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-800"
+                    className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-800 dark:text-amber-100"
                     aria-live="polite"
                   >
                     <p className="font-medium">Required fields left to fill:</p>
@@ -527,11 +604,14 @@ export function Contact() {
                   </div>
                 )}
                 <p
-                  className={`text-base ${
-                    status === "error" ? "text-destructive" : "text-emerald-500"
+                  className={`flex items-center gap-2 text-sm ${
+                    status === "error"
+                      ? "text-destructive"
+                      : "text-emerald-600 dark:text-cyan-300"
                   }`}
                   aria-live="polite"
                 >
+                  {status === "success" && <CheckCircle2 className="h-4 w-4" />}
                   {message}
                 </p>
               </form>

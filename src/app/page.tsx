@@ -43,7 +43,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="mx-auto flex max-w-5xl flex-col gap-16">
+      <div className="mx-auto flex max-w-5xl flex-col gap-8">
         <SiteNav />
         <ScrollProgress />
         <Hero />

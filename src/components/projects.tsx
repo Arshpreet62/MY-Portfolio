@@ -59,12 +59,12 @@ function ProjectCard({
         <CardHeader className="space-y-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg text-foreground">{title}</CardTitle>
-            <div className="flex flex-row gap-2 ">
-              <span className="rounded-full border border-border/60 bg-red-500 px-2.5 py-1 text-nowrap text-[11px] font-medium uppercase tracking-[0.2em] text-white">
+            <div className="flex flex-row gap-2">
+              <span className="rounded-full border border-border/60 bg-red-500 px-2.5 py-1 text-nowrap text-xs font-medium uppercase tracking-[0.2em] text-white">
                 {supportedDevices.join(" / ")}
               </span>
               <span
-                className={`rounded-full border border-border/60 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-white ${
+                className={`rounded-full border border-border/60 px-2.5 py-1 text-xs font-medium uppercase tracking-[0.2em] text-white ${
                   isLive ? "bg-green-500" : "bg-amber-500"
                 }`}
               >
@@ -129,8 +129,10 @@ export function Projects() {
       className="projects space-y-6 reveal-on-load reveal-delay-2 scroll-mt-24"
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold tracking-tight">My Projects</h2>
-        <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          My Projects
+        </h2>
+        <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
           2025-2026
         </span>
       </div>

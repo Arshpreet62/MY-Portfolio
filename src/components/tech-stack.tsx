@@ -15,14 +15,16 @@ export function TechStack() {
   return (
     <section id="tech-stack" className="space-y-6 scroll-mt-24">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>
-        <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          Tech Stack
+        </h2>
+        <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
           Core Tools
         </span>
       </div>
       <div className="flex flex-wrap gap-2">
         {stacks.map((stack) => (
-          <Badge key={stack} variant="outline" className="px-3 py-1 text-md">
+          <Badge key={stack} variant="outline" className="px-3 py-1 text-sm">
             {stack}
           </Badge>
         ))}
