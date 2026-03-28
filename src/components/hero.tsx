@@ -21,7 +21,7 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="space-y-6 scroll-mt-24">
+    <section id="hero" className="-mt-4 space-y-6 scroll-mt-24">
       <Badge
         variant="secondary"
         className="w-fit uppercase tracking-[0.3em] text-xs"
@@ -30,8 +30,8 @@ export function Hero() {
       </Badge>
       <div className="space-y-3">
         <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
-          Hi, I am Arshpreet, a web developer that build websites that are both
-          functional and attractive.
+          I'm Arshpreet Singh, a Full-Stack Developer building with React,
+          Next.js & Node.js.
         </h1>
         <p className="max-w-2xl text-3xl text-muted-foreground">
           I am based in Mohali, Punjab.

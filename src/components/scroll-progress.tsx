@@ -93,7 +93,7 @@ export function ScrollProgress() {
     <div className="pointer-events-none fixed right-2 top-1/2 z-40 h-[80vh] -translate-y-1/2 md:right-4">
       <div className="relative h-full w-32">
         <div
-          className="absolute right-1 top-0 h-full w-[3px] overflow-hidden rounded-full bg-border/50"
+          className="absolute right-1 top-0 h-full w-1 overflow-hidden rounded-full bg-border/60"
           aria-hidden="true"
         >
           <div
@@ -118,23 +118,23 @@ export function ScrollProgress() {
               aria-label={`Jump to ${item.label}`}
             >
               <span
-                className={`hidden rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] transition md:inline-block ${
+                className={`hidden rounded-full border px-2.5 py-1 text-xs uppercase tracking-[0.16em] transition md:inline-block ${
                   isActive
-                    ? "border-cyan-400/50 bg-cyan-500/15 text-cyan-300"
+                    ? "border-sky-500/45 bg-sky-500/15 text-sky-700 dark:border-cyan-400/50 dark:bg-cyan-500/15 dark:text-cyan-300"
                     : isPassed
-                      ? "border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
-                      : "border-border/60 bg-background/85 text-muted-foreground"
+                      ? "border-emerald-500/45 bg-emerald-500/15 text-emerald-700 dark:border-emerald-400/40 dark:bg-emerald-500/15 dark:text-emerald-300"
+                      : "border-border/70 bg-background/90 text-foreground/80 dark:border-border/60 dark:bg-background/85 dark:text-muted-foreground"
                 }`}
               >
                 {item.label}
               </span>
               <span
-                className={`h-2.5 w-2.5 rounded-full border transition ${
+                className={`h-3.5 w-3.5 rounded-full border transition ${
                   isActive
-                    ? "border-cyan-300 bg-cyan-400"
+                    ? "border-sky-600 bg-sky-600 dark:border-cyan-300 dark:bg-cyan-400"
                     : isPassed
-                      ? "border-emerald-300 bg-emerald-400"
-                      : "border-border/70 bg-background"
+                      ? "border-emerald-600 bg-emerald-600 dark:border-emerald-300 dark:bg-emerald-400"
+                      : "border-border/80 bg-background dark:border-border/70"
                 }`}
               />
             </button>

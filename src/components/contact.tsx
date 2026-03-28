@@ -4,12 +4,31 @@ import { track } from "@vercel/analytics";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 type FieldName = "name" | "email" | "interest" | "message";
 type FieldErrors = Partial<Record<FieldName, string>>;
 type FormDraft = Record<FieldName, string>;
 const fieldOrder: FieldName[] = ["name", "email", "interest", "message"];
+
+function suggestEmailDomain(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  if (trimmed.includes("@")) return trimmed;
+  if (/^[a-zA-Z0-9._%+-]+$/.test(trimmed)) {
+    return `${trimmed}@gmail.com`;
+  }
+  return trimmed;
+}
 
 function getValue(payload: Record<string, FormDataEntryValue>, field: string) {
   const value = payload[field];
@@ -50,14 +69,25 @@ function focusFirstInvalidField(form: HTMLFormElement, errors: FieldErrors) {
   const firstInvalidField = fieldOrder.find((field) => Boolean(errors[field]));
   if (!firstInvalidField) return;
 
-  const element = form.querySelector<
-    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  >(`[name="${firstInvalidField}"]`);
+  const element = form.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+    `[name="${firstInvalidField}"]`,
+  );
 
-  if (!element) return;
+  if (element) {
+    element.focus();
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
 
-  element.focus();
-  element.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (firstInvalidField === "interest") {
+    const selectTrigger = form.querySelector<HTMLButtonElement>(
+      '[data-field="interest"]',
+    );
+    if (selectTrigger) {
+      selectTrigger.focus();
+      selectTrigger.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
 }
 
 export function Contact() {
@@ -85,10 +115,9 @@ export function Contact() {
     interest: "Interested in",
     message: "Message",
   };
-  const missingFieldsText = fieldOrder
+  const missingFields = fieldOrder
     .filter((field) => Boolean(draftErrors[field]))
-    .map((field) => missingFieldLabels[field])
-    .join(", ");
+    .map((field) => missingFieldLabels[field]);
 
   const clearFieldError = (field: FieldName) => {
     setFieldErrors((prev) => {
@@ -125,7 +154,6 @@ export function Contact() {
     setFieldErrors({});
     track("contact_submit_attempt", {
       interest: getValue(payload, "interest") || "unknown",
-      preferredContact: getValue(payload, "contact") || "email",
     });
 
     try {
@@ -173,7 +201,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative isolate overflow-hidden py-24 reveal-on-load reveal-delay-3 scroll-mt-24"
+      className="relative isolate rounded-lg overflow-hidden py-16 reveal-on-load reveal-delay-3 scroll-mt-24"
       aria-label="Contact"
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -181,32 +209,61 @@ export function Contact() {
         <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-6">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-start">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Tell me about needed project or role
-            </h2>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Share a few details about what you need, your timeline, and how
-              you want to work. I will reply within 1-2 business days.
-            </p>
-            <div className="grid gap-4 text-sm text-muted-foreground sm:grid-cols-2">
-              <div className="rounded-xl border border-border/50 bg-card/60 p-4">
-                <p className="font-medium text-foreground">Availability</p>
-                <p>Open for freelance and full-time roles.</p>
+      <div className="relative z-10 mx-auto w-full max-w-4xl px-6">
+        <div className="grid gap-7 lg:grid-cols-[1fr_1fr] lg:items-stretch">
+          <div className=" p-6  md:p-7">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                Looking forward to hearing from you
+              </h2>
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                Thank you for considering my profile. I would be glad to learn
+                about your requirements and discuss how I can contribute to your
+                team or project.
+              </p>
+              <div className="space-y-2">
+                <p className="text-base font-semibold uppercase tracking-wide text-foreground/80">
+                  What I offer
+                </p>
+                <p className="text-base text-muted-foreground">
+                  End-to-end product thinking with strong execution to help you
+                  ship confidently.
+                </p>
               </div>
-              <div className="rounded-xl border border-border/50 bg-card/60 p-4">
-                <p className="font-medium text-foreground">Focus</p>
-                <p>Web development with modern technologies.</p>
+              <div className="grid gap-4 text-base text-muted-foreground">
+                <div className="rounded-xl border border-border/50 bg-card/60 p-4">
+                  <p className="font-medium text-foreground">Product Design</p>
+                  <p>
+                    User-focused interface design, wireframes, and practical UX
+                    decisions that support business goals.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border/50 bg-card/60 p-4">
+                  <p className="font-medium text-foreground">
+                    Frontend Development
+                  </p>
+                  <p>
+                    Clean, responsive React and Next.js applications with
+                    maintainable architecture and polished UI quality.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border/50 bg-card/60 p-4">
+                  <p className="font-medium text-foreground">
+                    API Integration and Performance
+                  </p>
+                  <p>
+                    Reliable API integrations, optimization, and production
+                    readiness to deliver fast, stable, and scalable products.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
-          <Card className="border-border/60 bg-background/80 shadow-xl shadow-black/5 backdrop-blur">
-            <CardHeader className="space-y-1">
-              <CardTitle className="text-xl">Send a message</CardTitle>
-              <p className="text-sm text-muted-foreground">
+          <Card className="h-full rounded-2xl border-border/60 bg-background/80 shadow-xl shadow-black/5 backdrop-blur">
+            <CardHeader className="space-y-1 rounded-t-2xl border-b border-border/40 bg-card/30">
+              <CardTitle className="text-2xl">Send a message</CardTitle>
+              <p className="text-base text-muted-foreground">
                 The more context you share, the better I can help.
               </p>
             </CardHeader>
@@ -218,9 +275,9 @@ export function Contact() {
                 action="#"
               >
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-base font-medium">
                     Name
-                    <input
+                    <Input
                       name="name"
                       type="text"
                       required
@@ -236,26 +293,28 @@ export function Contact() {
                       aria-describedby={
                         fieldErrors.name ? "contact-name-error" : undefined
                       }
-                      className={`h-11 w-full rounded-lg border bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                      className={`bg-background/80 ${
                         fieldErrors.name ? "border-destructive" : "border-input"
                       }`}
                     />
                     {fieldErrors.name && (
                       <span
                         id="contact-name-error"
-                        className="text-xs text-destructive"
+                        className="text-sm text-destructive"
                       >
                         {fieldErrors.name}
                       </span>
                     )}
                   </label>
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-base font-medium">
                     Email
-                    <input
+                    <Input
                       name="email"
                       type="email"
                       required
                       placeholder="you@company.com"
+                      value={formDraft.email}
+                      autoComplete="email"
                       onInput={() => clearFieldError("email")}
                       onChange={(event) =>
                         setFormDraft((prev) => ({
@@ -263,11 +322,22 @@ export function Contact() {
                           email: event.target.value,
                         }))
                       }
+                      onBlur={(event) => {
+                        const suggestedEmail = suggestEmailDomain(
+                          event.target.value,
+                        );
+                        if (suggestedEmail !== event.target.value) {
+                          setFormDraft((prev) => ({
+                            ...prev,
+                            email: suggestedEmail,
+                          }));
+                        }
+                      }}
                       aria-invalid={Boolean(fieldErrors.email)}
                       aria-describedby={
                         fieldErrors.email ? "contact-email-error" : undefined
                       }
-                      className={`h-11 w-full rounded-lg border bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                      className={`bg-background/80 ${
                         fieldErrors.email
                           ? "border-destructive"
                           : "border-input"
@@ -276,7 +346,7 @@ export function Contact() {
                     {fieldErrors.email && (
                       <span
                         id="contact-email-error"
-                        className="text-xs text-destructive"
+                        className="text-sm text-destructive"
                       >
                         {fieldErrors.email}
                       </span>
@@ -285,52 +355,58 @@ export function Contact() {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-base font-medium">
                     Company
-                    <input
+                    <Input
                       name="company"
                       type="text"
                       placeholder="Company or team"
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="bg-background/80"
                     />
                   </label>
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-base font-medium">
                     Interested in
-                    <select
+                    <Select
                       name="interest"
                       required
-                      defaultValue=""
-                      onChange={(event) => {
+                      value={formDraft.interest}
+                      onValueChange={(value) => {
                         clearFieldError("interest");
                         setFormDraft((prev) => ({
                           ...prev,
-                          interest: event.target.value,
+                          interest: value,
                         }));
                       }}
-                      aria-invalid={Boolean(fieldErrors.interest)}
-                      aria-describedby={
-                        fieldErrors.interest
-                          ? "contact-interest-error"
-                          : undefined
-                      }
-                      className={`h-11 w-full rounded-lg border bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                        fieldErrors.interest
-                          ? "border-destructive"
-                          : "border-input"
-                      }`}
                     >
-                      <option value="" disabled>
-                        Choose one
-                      </option>
-                      <option value="hire">Hiring for a role</option>
-                      <option value="project">A project or contract</option>
-                      <option value="collab">Collaboration</option>
-                      <option value="other">Something else</option>
-                    </select>
+                      <SelectTrigger
+                        data-field="interest"
+                        aria-invalid={Boolean(fieldErrors.interest)}
+                        aria-describedby={
+                          fieldErrors.interest
+                            ? "contact-interest-error"
+                            : undefined
+                        }
+                        className={`bg-background/80 ${
+                          fieldErrors.interest
+                            ? "border-destructive"
+                            : "border-input"
+                        }`}
+                      >
+                        <SelectValue placeholder="Choose one" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="hire">Hiring for a role</SelectItem>
+                        <SelectItem value="project">
+                          A project or contract
+                        </SelectItem>
+                        <SelectItem value="collab">Collaboration</SelectItem>
+                        <SelectItem value="other">Something else</SelectItem>
+                      </SelectContent>
+                    </Select>
                     {fieldErrors.interest && (
                       <span
                         id="contact-interest-error"
-                        className="text-xs text-destructive"
+                        className="text-sm text-destructive"
                       >
                         {fieldErrors.interest}
                       </span>
@@ -339,41 +415,40 @@ export function Contact() {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-base font-medium">
                     Budget range
-                    <select
-                      name="budget"
-                      defaultValue=""
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <option value="" disabled>
-                        Select a range
-                      </option>
-                      <option value="less than 5k">Below $5k</option>
-                      <option value="5k-15k">$5k - $15k</option>
-                      <option value="15k-40k">$15k - $40k</option>
-                      <option value="40k+">$40k+</option>
-                      <option value="custom">Custom amount</option>
-                    </select>
+                    <Select name="budget">
+                      <SelectTrigger className="bg-background/80">
+                        <SelectValue placeholder="Select a range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="less than 5k">Below $5k</SelectItem>
+                        <SelectItem value="5k-15k">$5k - $15k</SelectItem>
+                        <SelectItem value="15k-40k">$15k - $40k</SelectItem>
+                        <SelectItem value="40k+">$40k+</SelectItem>
+                        <SelectItem value="custom">Custom amount</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </label>
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
+                  <label className="grid min-w-0 gap-2 text-base font-medium">
                     Timeline
-                    <select
-                      name="timeline"
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <option value="">Select timeline</option>
-                      <option value="asap">ASAP</option>
-                      <option value="1-2-months">1-2 months</option>
-                      <option value="3-6-months">3-6 months</option>
-                      <option value="flexible">Flexible</option>
-                    </select>
+                    <Select name="timeline">
+                      <SelectTrigger className="bg-background/80">
+                        <SelectValue placeholder="Select timeline" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="asap">ASAP</SelectItem>
+                        <SelectItem value="1-2-months">1-2 months</SelectItem>
+                        <SelectItem value="3-6-months">3-6 months</SelectItem>
+                        <SelectItem value="flexible">Flexible</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </label>
                 </div>
 
-                <label className="grid min-w-0 gap-2 text-sm font-medium">
+                <label className="grid min-w-0 gap-2 text-base font-medium">
                   Message
-                  <textarea
+                  <Textarea
                     name="message"
                     rows={5}
                     required
@@ -389,7 +464,7 @@ export function Contact() {
                     aria-describedby={
                       fieldErrors.message ? "contact-message-error" : undefined
                     }
-                    className={`w-full rounded-lg border bg-background/80 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                    className={`bg-background/80 ${
                       fieldErrors.message
                         ? "border-destructive"
                         : "border-input"
@@ -398,13 +473,13 @@ export function Contact() {
                   {fieldErrors.message && (
                     <span
                       id="contact-message-error"
-                      className="text-xs text-destructive"
+                      className="text-sm text-destructive"
                     >
                       {fieldErrors.message}
                     </span>
                   )}
                   <span
-                    className={`text-xs ${
+                    className={`text-sm ${
                       formDraft.message.trim().length >= 20
                         ? "text-emerald-600"
                         : "text-muted-foreground"
@@ -414,25 +489,14 @@ export function Contact() {
                   </span>
                 </label>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
-                    Preferred contact
-                    <select
-                      name="contact"
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <option value="email">Email</option>
-                      <option value="phone">Phone</option>
-                      <option value="either">Either</option>
-                    </select>
-                  </label>
-                  <label className="grid min-w-0 gap-2 text-sm font-medium">
+                <div className="grid gap-4">
+                  <label className="grid min-w-0 gap-2 text-base font-medium">
                     Phone (optional)
-                    <input
+                    <Input
                       name="phone"
                       type="tel"
                       placeholder="+1 000 000 0000"
-                      className="h-11 w-full rounded-lg border border-input bg-background/80 px-3 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="bg-background/80"
                     />
                   </label>
                 </div>
@@ -440,7 +504,7 @@ export function Contact() {
                 <div className="flex flex-wrap items-center gap-3">
                   <Button
                     type="submit"
-                    className="h-11 px-6"
+                    className="h-12 px-7 text-base"
                     disabled={status === "loading" || !isFormValid}
                   >
                     {status === "loading"
@@ -449,20 +513,21 @@ export function Contact() {
                         ? "Send message"
                         : "Complete required fields"}
                   </Button>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-sm text-muted-foreground">
                     By submitting, you agree to be contacted about your inquiry.
                   </span>
                 </div>
                 {!isFormValid && status !== "loading" && (
-                  <p
-                    className="text-xs text-muted-foreground"
+                  <div
+                    className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-800"
                     aria-live="polite"
                   >
-                    Missing or invalid: {missingFieldsText}
-                  </p>
+                    <p className="font-medium">Required fields left to fill:</p>
+                    <p>{missingFields.join(", ")}</p>
+                  </div>
                 )}
                 <p
-                  className={`text-sm ${
+                  className={`text-base ${
                     status === "error" ? "text-destructive" : "text-emerald-500"
                   }`}
                   aria-live="polite"
