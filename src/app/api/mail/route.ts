@@ -48,8 +48,6 @@ export async function POST(request: NextRequest) {
   const message = String(body.message || "").trim();
   const interest = String(body.interest || "").trim();
   const company = String(body.company || "").trim();
-  const budget = String(body.budget || "").trim();
-  const timeline = String(body.timeline || "").trim();
   const contact = String(body.contact || "").trim();
   const phone = String(body.phone || "").trim();
 
@@ -118,8 +116,6 @@ export async function POST(request: NextRequest) {
     `Email: ${email}`,
     company ? `Company: ${company}` : null,
     interest ? `Interest: ${interest}` : null,
-    budget ? `Budget: ${budget}` : null,
-    timeline ? `Timeline: ${timeline}` : null,
     contact ? `Preferred contact: ${contact}` : null,
     phone ? `Phone: ${phone}` : null,
     "---",

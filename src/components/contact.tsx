@@ -30,8 +30,6 @@ type FormDraft = {
   interest: string;
   message: string;
   company: string;
-  budget: string;
-  timeline: string;
   phone: string;
 };
 const fieldOrder: FieldName[] = ["name", "email", "interest", "message"];
@@ -116,8 +114,6 @@ export function Contact() {
     interest: "",
     message: "",
     company: "",
-    budget: "",
-    timeline: "",
     phone: "",
   });
 
@@ -169,8 +165,6 @@ export function Contact() {
       interest: formDraft.interest,
       message: formDraft.message,
       company: formDraft.company,
-      budget: formDraft.budget,
-      timeline: formDraft.timeline,
       phone: formDraft.phone,
     };
 
@@ -223,8 +217,6 @@ export function Contact() {
         interest: "",
         message: "",
         company: "",
-        budget: "",
-        timeline: "",
         phone: "",
       });
     } catch {
@@ -462,56 +454,6 @@ export function Contact() {
                         {fieldErrors.interest}
                       </span>
                     )}
-                  </label>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
-                    Budget range
-                    <Select
-                      name="budget"
-                      value={formDraft.budget}
-                      onValueChange={(value) =>
-                        setFormDraft((prev) => ({
-                          ...prev,
-                          budget: value,
-                        }))
-                      }
-                    >
-                      <SelectTrigger className="h-10 rounded-xl bg-background/80">
-                        <SelectValue placeholder="Select a range" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="less than 5k">Below $5k</SelectItem>
-                        <SelectItem value="5k-15k">$5k - $15k</SelectItem>
-                        <SelectItem value="15k-40k">$15k - $40k</SelectItem>
-                        <SelectItem value="40k+">$40k+</SelectItem>
-                        <SelectItem value="custom">Custom amount</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </label>
-                  <label className="grid min-w-0 gap-2 text-sm font-medium uppercase tracking-[0.12em] text-foreground/85">
-                    Timeline
-                    <Select
-                      name="timeline"
-                      value={formDraft.timeline}
-                      onValueChange={(value) =>
-                        setFormDraft((prev) => ({
-                          ...prev,
-                          timeline: value,
-                        }))
-                      }
-                    >
-                      <SelectTrigger className="h-10 rounded-xl bg-background/80">
-                        <SelectValue placeholder="Select timeline" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="asap">ASAP</SelectItem>
-                        <SelectItem value="1-2-months">1-2 months</SelectItem>
-                        <SelectItem value="3-6-months">3-6 months</SelectItem>
-                        <SelectItem value="flexible">Flexible</SelectItem>
-                      </SelectContent>
-                    </Select>
                   </label>
                 </div>
 
