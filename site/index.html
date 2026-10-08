@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arshpreet Singh</title>
+<meta name="description" content="Arshpreet Singh is a full-stack developer in Mohali, Punjab, building MERN and Next.js apps. Selected work taken apart layer by layer, and every repository.">
+<meta name="theme-color" content="#d9d7d0">
+<meta property="og:title" content="Arshpreet Singh, full-stack developer">
+<meta property="og:description" content="MERN and Next.js apps from Mohali, Punjab, drawn as a set of sheets.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://my-portfolio-rosy-zeta-98.vercel.app/">
+<!-- Crawlers need absolute URLs: once deployed, prefix these with the site's address. -->
+<meta property="og:image" content="https://my-portfolio-rosy-zeta-98.vercel.app/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Arshpreet Singh's name in large condensed type beside an engraved portrait">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Arshpreet Singh","alternateName":"ਅਰਸ਼ਪ੍ਰੀਤ ਸਿੰਘ","jobTitle":"Full-stack developer","address":{"@type":"PostalAddress","addressLocality":"Mohali","addressRegion":"Punjab","addressCountry":"IN"},"sameAs":["https://github.com/Arshpreet62","https://www.linkedin.com/in/arshpreet-singh-8860b8370"]}}
+</script>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Gurmukhi:wdth,wght@75..125,300..700&display=swap&text=%E0%A8%85%E0%A8%B0%E0%A8%B8%E0%A8%BC%E0%A8%AA%E0%A9%8D%E0%A8%B0%E0%A9%80%E0%A8%A4%20%E0%A8%B8%E0%A8%BF%E0%A9%B0%E0%A8%98">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  // Before first paint: apply a saved theme (no flash of the wrong one), and, when
+  // motion is welcome, show the name in pencil so main.js can ink it. The timer
+  // inks it anyway if main.js never runs.
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('as-theme'); if (t === 'light' || t === 'dark') d.dataset.theme = t; } catch (e) {}
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      d.classList.add('drafting');
+      setTimeout(function () { d.classList.remove('drafting', 'inking'); }, 3200);
+    }
+  })();
+</script>
+</head>
+<body>
+<a class="skip" href="#work">Skip to selected work</a>
+
+<header class="bar">
+  <a class="bar__name" href="#top">
+    <span class="bar__mark" aria-hidden="true">AS</span>
+    <span class="bar__who">Arshpreet Singh <span class="bar__role">Full-stack developer</span></span>
+  </a>
+  <p class="bar__sheet" aria-hidden="true"><span class="bar__sheet-no" data-sheet-no>A-000</span> <span data-sheet-title>Cover</span></p>
+  <nav class="bar__nav" aria-label="Sections">
+    <a href="#work">Work</a>
+    <a href="#notes">Notes</a>
+    <a href="#register">Repositories</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="bar__theme" type="button" data-theme-toggle data-on="false" aria-label="Switch to blueprint">
+    <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><rect x="2.75" y="3.75" width="14.5" height="12.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2.75 3.75h14.5v6.25H2.75z" fill="currentColor"/></svg>
+    <span class="bar__theme-label">Blueprint</span>
+  </button>
+</header>
+
+<main id="top">
+  <section class="cover" data-sheet="A-000" data-sheet-name="Cover" aria-labelledby="cover-name">
+    <div class="guides" aria-hidden="true" data-guides></div>
+    <p class="cover__gurmukhi" lang="pa">ਅਰਸ਼ਪ੍ਰੀਤ ਸਿੰਘ</p>
+    <div class="dim" aria-hidden="true" data-dim><span class="dim__value" data-dim-value></span></div>
+    <h1 id="cover-name" class="cover__title">
+      <span class="cover__line" data-dim-target>Arshpreet</span>
+      <span class="cover__line">Singh</span>
+    </h1>
+
+    <figure class="portrait">
+      <div class="portrait__plate" data-portrait>
+        <img src="assets/img/portrait.webp" srcset="assets/img/portrait-640.webp 640w, assets/img/portrait.webp 1000w" sizes="(min-width: 1000px) 40vw, (min-width: 640px) 55vw, 80vw" width="1000" height="1157" fetchpriority="high" alt="Arshpreet Singh in clear-framed glasses, a green T-shirt and a charcoal overshirt">
+      </div>
+      <figcaption class="portrait__cap">
+        <span class="label">Fig. 1</span> <span data-portrait-cap>The author.</span>
+        <span class="portrait__tools" data-portrait-tools hidden>
+          <span class="portrait__hint" data-portrait-hint>Move over the drawing to see the photograph.</span>
+          <button type="button" class="textbtn" data-photo-toggle>Show photograph</button>
+        </span>
+      </figcaption>
+    </figure>
+
+    <div class="cover__text">
+      <p class="cover__lede">Full-stack developer in Mohali, Punjab. I build web apps end to end with MongoDB, Express, React and Node, and reach for Next.js when one codebase fits better than two.</p>
+      <dl class="titleblock cover__block">
+        <div><dt>Project</dt><dd>Portfolio 2026</dd></div>
+        <div><dt>Discipline</dt><dd>Full-stack web</dd></div>
+        <div><dt>Stack</dt><dd>MERN and Next.js</dd></div>
+        <div><dt>Based in</dt><dd>Mohali, Punjab, India</dd></div>
+        <div class="titleblock__status"><dt>Status</dt><dd><a href="#contact">Issued for hire</a></dd></div>
+        <div><dt>Sheet</dt><dd>A-000</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="work" id="work" data-sheet="A-100" data-sheet-name="Selected work" aria-labelledby="work-title">
+    <header class="sectionhead" data-rule>
+      <p class="sectionhead__no label">A-100</p>
+      <h2 id="work-title" class="sectionhead__title">Selected work</h2>
+      <p class="sectionhead__lede">Three builds, taken apart layer by layer, so you can see what each one is made of.</p>
+    </header>
+
+    <!-- A-101 ============================================================ -->
+    <article class="sheet" id="postmen" data-sheet="A-101" data-sheet-name="Postmen" aria-labelledby="postmen-title">
+      <header class="sheet__head">
+        <h3 id="postmen-title" class="sheet__title">Postmen</h3>
+        <p class="sheet__kind">API workbench, full stack</p>
+      </header>
+      <p class="sheet__lede">A Postman-style workbench for testing APIs. Sign in, send any request, read the formatted response, and come back to your history later.</p>
+
+      <div class="sheet__draw">
+        <figure class="axo" data-axo aria-describedby="postmen-key">
+          <div class="axo__pin">
+            <div class="axo__stage">
+              <div class="axo__rig">
+                <div class="plate" data-fill="stipple" style="--i: 0" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>4</b> Data</span>
+                    <div class="pl-erd">
+                      <div class="pl-table"><span class="pl-table__name">users</span><span>email, unique</span><span>password</span><span>authProvider</span><span>googleId</span><span>name, avatar</span><span>createdAt</span></div>
+                      <span class="pl-erd__rel"></span>
+                      <div class="pl-table"><span class="pl-table__name">requesthistories</span><span>user &rarr; users</span><span>endpoint</span><span>method</span><span>request</span><span>response</span><span>timestamp</span></div>
+                    </div>
+                    <span class="pl-note">MongoDB Atlas, through Mongoose</span>
+                  </div>
+                </div>
+                <div class="plate" data-fill="cross" style="--i: 1" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>3</b> Auth</span>
+                    <div class="pl-auth">
+                      <span class="pl-big">JWT</span>
+                      <span>24 h token, 30 days with Remember me</span>
+                      <span>POST /api/auth/refresh signs a new one</span>
+                      <span>Passwords hashed with bcrypt, 10 rounds</span>
+                      <span>Google ID tokens checked with google-auth-library</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="plate" data-fill="diag" style="--i: 2" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>2</b> Server</span>
+                    <div class="pl-routes">
+                      <span><b>POST</b> /api/request</span>
+                      <span><b>GET</b> /api/history</span>
+                      <span><b>DELETE</b> /api/history</span>
+                      <span><b>GET</b> /api/history/[id]</span>
+                      <span><b>DELETE</b> /api/history/[id]</span>
+                      <span><b>GET</b> /api/stats</span>
+                      <span><b>POST</b> /api/auth/signup</span>
+                      <span><b>POST</b> /api/auth/login</span>
+                      <span><b>POST</b> /api/auth/google</span>
+                      <span><b>POST</b> /api/auth/refresh</span>
+                      <span><b>POST</b> /api/auth/logout</span>
+                      <span><b>GET</b> /api/auth/profile</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="plate plate--top" style="--i: 3">
+                  <div class="plate__face">
+                    <img class="plate__shot" src="assets/img/postmen.webp" width="1400" height="920" loading="lazy" alt="Postmen landing page: Industrial-grade API testing for modern teams, with a live GET request card showing 200 OK">
+                  </div>
+                </div>
+              </div>
+              <ol class="axo__keys" aria-hidden="true">
+                <li style="--i: 3"><b>1</b><span>Interface</span></li>
+                <li style="--i: 2"><b>2</b><span>Server</span></li>
+                <li style="--i: 1"><b>3</b><span>Auth</span></li>
+                <li style="--i: 0"><b>4</b><span>Data</span></li>
+              </ol>
+            </div>
+            <figcaption><span class="label">Exploded view</span> The landing page, lifted off the layers that run it.</figcaption>
+          </div>
+        </figure>
+      </div>
+
+      <div class="sheet__notes">
+        <p>API testing was spread across tools, so auth and request history were hard to keep hold of. Postmen puts the request builder, formatted responses, saved history and usage stats in one signed-in dashboard.</p>
+        <p>It started as a MERN build with a separate Express server and a Vite client, then was rebuilt as one Next.js app whose route handlers talk to MongoDB directly.</p>
+        <p class="sheet__links">
+          <a href="https://postmen.vercel.app/" target="_blank" rel="noopener">Open postmen.vercel.app</a>
+          <a href="https://github.com/Arshpreet62/Postmen" target="_blank" rel="noopener">Read the code</a>
+        </p>
+      </div>
+
+      <div class="key" id="postmen-key">
+        <p class="key__title label">Key</p>
+        <ol class="strata">
+          <li class="stratum" data-fill="open"><span class="stratum__no">1</span><span class="stratum__layer">Interface</span><span class="stratum__spec">Next.js 15 App Router, React 19, Tailwind CSS 4, Radix UI</span></li>
+          <li class="stratum" data-fill="diag"><span class="stratum__no">2</span><span class="stratum__layer">Server</span><span class="stratum__spec">Route handlers for auth, requests, history and stats</span></li>
+          <li class="stratum" data-fill="cross"><span class="stratum__no">3</span><span class="stratum__layer">Auth</span><span class="stratum__spec">JWT with refresh, bcrypt-hashed passwords, Google sign-in</span></li>
+          <li class="stratum" data-fill="stipple"><span class="stratum__no">4</span><span class="stratum__layer">Data</span><span class="stratum__spec">MongoDB Atlas through Mongoose: users and request history</span></li>
+        </ol>
+        <p class="key__foot">Tested end to end with Playwright. Hosted on Vercel.</p>
+      </div>
+
+      <dl class="titleblock sheet__block">
+        <div><dt>Revisions</dt><dd>34 commits</dd></div>
+        <div><dt>Issued</dt><dd>Aug 2025 to Feb 2026</dd></div>
+        <div><dt>Status</dt><dd>Live</dd></div>
+        <div class="titleblock__sheet"><dt>Sheet</dt><dd>A-101</dd></div>
+      </dl>
+    </article>
+
+    <!-- A-102 ============================================================ -->
+    <article class="sheet" id="platemate" data-sheet="A-102" data-sheet-name="PlateMate" aria-labelledby="platemate-title">
+      <header class="sheet__head">
+        <h3 id="platemate-title" class="sheet__title">PlateMate</h3>
+        <p class="sheet__kind">Counter app, offline PWA</p>
+      </header>
+      <p class="sheet__lede">A meal-pass counter for a buffet. The owner adds a customer, sells a plan and ticks off a meal at each visit. It runs on the owner's phone and keeps working with the internet off.</p>
+
+      <div class="sheet__draw">
+        <figure class="axo" data-axo aria-describedby="platemate-key">
+          <div class="axo__pin">
+            <div class="axo__stage">
+              <div class="axo__rig">
+                <div class="plate" data-fill="stipple" style="--i: 0" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>4</b> Data</span>
+                    <div class="pl-erd pl-erd--dexie">
+                      <div class="pl-table"><span class="pl-table__name">customers</span><span>id</span><span>&amp;nameLower</span><span>&amp;passCode</span><span>name, phone</span><span>createdAt</span></div>
+                      <div class="pl-table"><span class="pl-table__name">transactions</span><span>++id</span><span>customerId</span><span>type</span><span>createdAt</span><span>&amp;reversalOfId</span></div>
+                      <div class="pl-table"><span class="pl-table__name">packs</span><span>++id</span><span>sortOrder</span></div>
+                      <div class="pl-table"><span class="pl-table__name">settings</span><span>id</span></div>
+                    </div>
+                    <span class="pl-note">IndexedDB "buffet-pass", version 1, through Dexie</span>
+                  </div>
+                </div>
+                <div class="plate" data-fill="diag" style="--i: 1" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>3</b> Rules</span>
+                    <div class="pl-routes pl-routes--fns">
+                      <span>createCustomer()</span>
+                      <span>topup()</span>
+                      <span>spendEntries()</span>
+                      <span>adjust()</span>
+                      <span>undoEntry()</span>
+                      <span>scan()</span>
+                      <span>replacePass()</span>
+                      <span>exportBackup()</span>
+                      <span>importBackup()</span>
+                    </div>
+                    <span class="pl-note">client/src/db, no React, tested with Vitest</span>
+                  </div>
+                </div>
+                <div class="plate" data-fill="dots" style="--i: 2" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>2</b> Device</span>
+                    <div class="pl-device">
+                      <svg class="pl-qr" viewBox="-2 -2 33 33" aria-hidden="true"><rect x="-2" y="-2" width="33" height="33" class="pl-qr__bg"/><path d="M0 0h7v1h-7zM8 0h2v1h-2zM11 0h2v1h-2zM15 0h5v1h-5zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h2v1h-2zM11 1h2v1h-2zM15 1h1v1h-1zM17 1h4v1h-4zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h4v1h-4zM14 2h2v1h-2zM18 2h1v1h-1zM20 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM11 3h1v1h-1zM14 3h2v1h-2zM18 3h2v1h-2zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM11 5h2v1h-2zM14 5h1v1h-1zM18 5h2v1h-2zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h2v1h-2zM13 7h2v1h-2zM16 7h3v1h-3zM1 8h2v1h-2zM4 8h1v1h-1zM6 8h2v1h-2zM10 8h1v1h-1zM12 8h2v1h-2zM15 8h3v1h-3zM19 8h1v1h-1zM22 8h1v1h-1zM24 8h5v1h-5zM1 9h3v1h-3zM7 9h3v1h-3zM11 9h3v1h-3zM16 9h1v1h-1zM20 9h2v1h-2zM27 9h2v1h-2zM0 10h1v1h-1zM2 10h3v1h-3zM6 10h2v1h-2zM9 10h4v1h-4zM14 10h3v1h-3zM18 10h1v1h-1zM20 10h2v1h-2zM24 10h1v1h-1zM27 10h2v1h-2zM0 11h5v1h-5zM9 11h6v1h-6zM17 11h2v1h-2zM20 11h1v1h-1zM24 11h1v1h-1zM27 11h1v1h-1zM1 12h1v1h-1zM5 12h2v1h-2zM8 12h2v1h-2zM11 12h1v1h-1zM16 12h2v1h-2zM21 12h2v1h-2zM25 12h1v1h-1zM28 12h1v1h-1zM2 13h3v1h-3zM8 13h3v1h-3zM12 13h4v1h-4zM17 13h1v1h-1zM21 13h2v1h-2zM26 13h1v1h-1zM28 13h1v1h-1zM1 14h2v1h-2zM6 14h1v1h-1zM9 14h1v1h-1zM13 14h1v1h-1zM17 14h2v1h-2zM21 14h1v1h-1zM23 14h2v1h-2zM26 14h3v1h-3zM0 15h1v1h-1zM2 15h1v1h-1zM5 15h1v1h-1zM8 15h3v1h-3zM13 15h1v1h-1zM17 15h1v1h-1zM19 15h2v1h-2zM22 15h1v1h-1zM27 15h2v1h-2zM0 16h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM9 16h1v1h-1zM13 16h1v1h-1zM15 16h2v1h-2zM22 16h1v1h-1zM3 17h2v1h-2zM7 17h2v1h-2zM10 17h1v1h-1zM12 17h1v1h-1zM15 17h1v1h-1zM17 17h2v1h-2zM20 17h1v1h-1zM22 17h1v1h-1zM25 17h2v1h-2zM28 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM4 18h1v1h-1zM6 18h6v1h-6zM13 18h2v1h-2zM20 18h1v1h-1zM22 18h3v1h-3zM26 18h3v1h-3zM1 19h2v1h-2zM4 19h2v1h-2zM7 19h1v1h-1zM10 19h1v1h-1zM12 19h1v1h-1zM16 19h2v1h-2zM23 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM2 20h2v1h-2zM6 20h1v1h-1zM8 20h4v1h-4zM13 20h1v1h-1zM16 20h2v1h-2zM20 20h5v1h-5zM26 20h1v1h-1zM28 20h1v1h-1zM8 21h2v1h-2zM11 21h2v1h-2zM14 21h4v1h-4zM19 21h2v1h-2zM24 21h2v1h-2zM0 22h7v1h-7zM8 22h3v1h-3zM12 22h1v1h-1zM16 22h1v1h-1zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h5v1h-5zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h2v1h-2zM12 23h1v1h-1zM16 23h3v1h-3zM20 23h1v1h-1zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h1v1h-1zM11 24h2v1h-2zM14 24h1v1h-1zM20 24h6v1h-6zM27 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM9 25h1v1h-1zM14 25h1v1h-1zM16 25h4v1h-4zM23 25h2v1h-2zM26 25h3v1h-3zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM11 26h4v1h-4zM19 26h3v1h-3zM23 26h2v1h-2zM26 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM11 27h4v1h-4zM16 27h3v1h-3zM20 27h1v1h-1zM23 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM10 28h2v1h-2zM13 28h2v1h-2zM16 28h1v1h-1zM19 28h3v1h-3zM23 28h2v1h-2zM26 28h3v1h-3z"/></svg>
+                      <div class="pl-device__notes">
+                        <span>Camera scans a pass with html5-qrcode</span>
+                        <span>qrcode.react draws each pass, saved as an image</span>
+                        <span>A service worker keeps it working offline</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="plate plate--top" style="--i: 3">
+                  <div class="plate__face plate__face--phones">
+                    <img src="assets/img/platemate-list.webp" width="600" height="1298" loading="lazy" alt="PlateMate customer list with meals left per person and All, Low and Finished filters">
+                    <img src="assets/img/platemate-customer.webp" width="600" height="1298" loading="lazy" alt="A customer page showing 17 entries left, a Use 1 entry button and visit history with undo">
+                    <img src="assets/img/platemate-qr.webp" width="600" height="1298" loading="lazy" alt="A customer's QR pass, ready to share on WhatsApp">
+                  </div>
+                </div>
+              </div>
+              <ol class="axo__keys" aria-hidden="true">
+                <li style="--i: 3"><b>1</b><span>Interface</span></li>
+                <li style="--i: 2"><b>2</b><span>Device</span></li>
+                <li style="--i: 1"><b>3</b><span>Rules</span></li>
+                <li style="--i: 0"><b>4</b><span>Data</span></li>
+              </ol>
+            </div>
+            <figcaption><span class="label">Exploded view</span> List, customer and QR pass on a phone, over the layers beneath. Names are sample data.</figcaption>
+          </div>
+        </figure>
+      </div>
+
+      <div class="sheet__notes">
+        <p>The README puts it plainly: <q>It counts meals, not money.</q> Payment happens at the counter, so the app holds no prices at all.</p>
+        <p>Version 1.0 closed a double charge: a quick double tap on <em>Start plan</em> credited a plan twice for one payment. Every write now passes a guard that flips synchronously. In 1.1 the list lost its <em>Use 1</em> buttons, because a stray thumb while scrolling could take someone's meal.</p>
+        <p>Backups export the whole database as one JSON file, and restores are all or nothing on purpose.</p>
+        <p class="sheet__links">
+          <a href="https://github.com/Arshpreet62/PlateMate" target="_blank" rel="noopener">Read the code</a>
+          <a href="https://github.com/Arshpreet62/PlateMate/blob/main/docs/OWNER-GUIDE.md" target="_blank" rel="noopener">Read the owner's guide</a>
+        </p>
+      </div>
+
+      <div class="key" id="platemate-key">
+        <p class="key__title label">Key</p>
+        <ol class="strata">
+          <li class="stratum" data-fill="open"><span class="stratum__no">1</span><span class="stratum__layer">Interface</span><span class="stratum__spec">React 19, Mantine, React Router, installable PWA</span></li>
+          <li class="stratum" data-fill="dots"><span class="stratum__no">2</span><span class="stratum__layer">Device</span><span class="stratum__spec">Camera QR scanning, QR passes saved as images</span></li>
+          <li class="stratum" data-fill="diag"><span class="stratum__no">3</span><span class="stratum__layer">Rules</span><span class="stratum__spec">One data layer with no React: credits, customers, plans, backup</span></li>
+          <li class="stratum" data-fill="stipple"><span class="stratum__no">4</span><span class="stratum__layer">Data</span><span class="stratum__spec">IndexedDB through Dexie, on the phone. There is no server.</span></li>
+        </ol>
+        <p class="key__foot">Tested with Vitest against fake-indexeddb. Runs from any static host.</p>
+      </div>
+
+      <dl class="titleblock sheet__block">
+        <div><dt>Revisions</dt><dd>17 commits</dd></div>
+        <div><dt>Issued</dt><dd>Sep 2026</dd></div>
+        <div><dt>Status</dt><dd>Installable, v1.4</dd></div>
+        <div class="titleblock__sheet"><dt>Sheet</dt><dd>A-102</dd></div>
+      </dl>
+    </article>
+
+    <!-- A-103 ============================================================ -->
+    <article class="sheet" id="harbour" data-sheet="A-103" data-sheet-name="Harbour Ride" aria-labelledby="harbour-title">
+      <header class="sheet__head">
+        <h3 id="harbour-title" class="sheet__title">Harbour Ride</h3>
+        <p class="sheet__kind">Booking prototype, maps and email</p>
+      </header>
+      <p class="sheet__lede">A taxi booking site for Sydney. Riders see a fare on a real route before they book, and each booking lands in the operator's inbox with a reference number.</p>
+
+      <div class="sheet__draw">
+        <figure class="axo" data-axo aria-describedby="harbour-key">
+          <div class="axo__pin">
+            <div class="axo__stage">
+              <div class="axo__rig">
+                <div class="plate" data-fill="cross" style="--i: 0" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>4</b> Mail</span>
+                    <div class="pl-mail">
+                      <span class="pl-mail__subject">New ride request HR-&hellip;</span>
+                      <span>Booking reference</span><span>Passenger</span><span>Phone</span><span>Email</span><span>Pickup</span><span>Destination</span><span>When</span><span>Vehicle</span><span>Estimate</span><span>Notes</span>
+                    </div>
+                    <span class="pl-note">Sent to the operator with Nodemailer</span>
+                  </div>
+                </div>
+                <div class="plate" data-fill="diag" style="--i: 1" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>3</b> Server</span>
+                    <div class="pl-routes pl-routes--one">
+                      <span><b>POST</b> /api/estimate <i>geocode, route, price, 15 min to book</i></span>
+                      <span><b>POST</b> /api/bookings <i>one booking per quote, then email</i></span>
+                      <span><b>GET</b> /api/health</span>
+                    </div>
+                    <span class="pl-note">Express, with Nominatim for addresses and OSRM for routes</span>
+                  </div>
+                </div>
+                <div class="plate" data-fill="dots" style="--i: 2" aria-hidden="true">
+                  <div class="plate__face">
+                    <span class="plate__tag"><b>2</b> Map</span>
+                    <svg class="pl-map" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <path class="pl-map__tiles" d="M0 0H300M0 50H300M0 100H300M0 150H300M0 0V150M60 0V150M120 0V150M180 0V150M240 0V150M300 0V150"/>
+                      <path class="pl-map__route" d="M52 118c18-6 30-12 38-26s10-34 28-40 36 8 52 4 20-22 38-26 34 4 44 10"/>
+                      <circle class="pl-map__pin" cx="52" cy="118" r="6"/>
+                      <circle class="pl-map__pin pl-map__pin--end" cx="252" cy="40" r="6"/>
+                    </svg>
+                    <span class="pl-note">Leaflet on OpenStreetMap tiles, the route drawn as a line</span>
+                  </div>
+                </div>
+                <div class="plate plate--top" style="--i: 3">
+                  <div class="plate__face plate__face--pair">
+                    <img class="pair__desk" src="assets/img/harbour-desktop.webp" width="1600" height="1000" loading="lazy" alt="Harbour Ride landing page: Getting there made simple, with an illustration of a red taxi crossing a bridge">
+                    <img class="pair__phone" src="assets/img/harbour-mobile.webp" width="600" height="1298" loading="lazy" alt="The same page on a phone">
+                  </div>
+                </div>
+              </div>
+              <ol class="axo__keys" aria-hidden="true">
+                <li style="--i: 3"><b>1</b><span>Interface</span></li>
+                <li style="--i: 2"><b>2</b><span>Map</span></li>
+                <li style="--i: 1"><b>3</b><span>Server</span></li>
+                <li style="--i: 0"><b>4</b><span>Mail</span></li>
+              </ol>
+            </div>
+            <figcaption><span class="label">Exploded view</span> The landing page on desktop and phone, over the map, server and mail.</figcaption>
+          </div>
+        </figure>
+      </div>
+
+      <div class="sheet__notes">
+        <p>The server prices every quote and gives it an expiry, so the fare a rider books is the fare they were shown. A quote can be booked only once, which stops a double submit from creating two bookings.</p>
+        <p>If address lookup fails, the estimate falls back to a demo route instead of blocking the form.</p>
+        <p class="sheet__links">
+          <a href="https://github.com/Arshpreet62/taxi_app" target="_blank" rel="noopener">Read the code</a>
+        </p>
+      </div>
+
+      <div class="key" id="harbour-key">
+        <p class="key__title label">Key</p>
+        <ol class="strata">
+          <li class="stratum" data-fill="open"><span class="stratum__no">1</span><span class="stratum__layer">Interface</span><span class="stratum__spec">React on Vite, Radix Select, a date picker that loads only when needed</span></li>
+          <li class="stratum" data-fill="dots"><span class="stratum__no">2</span><span class="stratum__layer">Map</span><span class="stratum__spec">Leaflet with OpenStreetMap tiles and the route drawn as a line</span></li>
+          <li class="stratum" data-fill="diag"><span class="stratum__no">3</span><span class="stratum__layer">Server</span><span class="stratum__spec">Express API: geocoding with Nominatim, routing with OSRM, fare quotes</span></li>
+          <li class="stratum" data-fill="cross"><span class="stratum__no">4</span><span class="stratum__layer">Mail</span><span class="stratum__spec">Nodemailer sends each booking with its reference</span></li>
+        </ol>
+        <p class="key__foot">Quotes expire after 15 minutes, and each one can be booked once.</p>
+      </div>
+
+      <dl class="titleblock sheet__block">
+        <div><dt>Revisions</dt><dd>2 commits</dd></div>
+        <div><dt>Issued</dt><dd>Sep 2026</dd></div>
+        <div><dt>Status</dt><dd>Prototype</dd></div>
+        <div class="titleblock__sheet"><dt>Sheet</dt><dd>A-103</dd></div>
+      </dl>
+    </article>
+
+    <div class="smaller" role="group" aria-labelledby="smaller-title">
+      <h3 id="smaller-title" class="smaller__title">Smaller builds, live</h3>
+      <div class="smaller__grid">
+        <figure class="small">
+          <a class="small__shot" href="https://typespeed-tester.vercel.app/" target="_blank" rel="noopener" aria-label="Open TypeSpeed Tester"><img src="assets/img/typespeed.webp" width="1200" height="660" loading="lazy" alt=""></a>
+          <figcaption><strong>TypeSpeed Tester.</strong> A typing test with live WPM, accuracy and an on-screen keyboard, built with React and Motion. <a href="https://typespeed-tester.vercel.app/" target="_blank" rel="noopener">Try it</a> or <a href="https://github.com/Arshpreet62/TYPESPEED-Tester" target="_blank" rel="noopener">read the code</a>.</figcaption>
+        </figure>
+        <figure class="small">
+          <a class="small__shot" href="https://cssgenerator-two.vercel.app/" target="_blank" rel="noopener" aria-label="Open CSS Generator"><img src="assets/img/cssgen.webp" width="1200" height="715" loading="lazy" alt=""></a>
+          <figcaption><strong>CSS Generator.</strong> Style a button, input or paragraph and copy the CSS and HTML, built with React and TypeScript. <a href="https://cssgenerator-two.vercel.app/" target="_blank" rel="noopener">Try it</a> or <a href="https://github.com/Arshpreet62/Cssgenerator" target="_blank" rel="noopener">read the code</a>.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="notes" id="notes" data-sheet="A-200" data-sheet-name="General notes" aria-labelledby="notes-title">
+    <header class="sectionhead" data-rule>
+      <p class="sectionhead__no label">A-200</p>
+      <h2 id="notes-title" class="sectionhead__title">General notes</h2>
+      <p class="sectionhead__lede">How I work, each with the file or commit that shows it.</p>
+    </header>
+    <ol class="notelist">
+      <li>
+        <h3>Keep the rules in one place.</h3>
+        <p>PlateMate's balance rules live in one data layer with no React in it, and the tests run against that layer directly.</p>
+        <a class="ref" href="https://github.com/Arshpreet62/PlateMate/tree/main/client/src/db" target="_blank" rel="noopener">client/src/db</a>
+      </li>
+      <li>
+        <h3>Close the expensive mistake in code.</h3>
+        <p>A double tap once credited a plan twice, and a stray thumb in the list could spend a meal. Writes now pass a guard that flips synchronously, and list rows no longer spend.</p>
+        <a class="ref" href="https://github.com/Arshpreet62/PlateMate/commit/a350445" target="_blank" rel="noopener">commit a350445</a>
+      </li>
+      <li>
+        <h3>Treat names as identities.</h3>
+        <p>The database is still called buffet-pass after the app was renamed. Renaming it would have orphaned every record already on the phone.</p>
+        <a class="ref" href="https://github.com/Arshpreet62/PlateMate/blob/main/client/src/db/schema.js" target="_blank" rel="noopener">db/schema.js</a>
+      </li>
+      <li>
+        <h3>Test the paths people depend on.</h3>
+        <p>Postmen has end-to-end tests for the landing page, sign-in and the dashboard, the three places a broken release would hurt most.</p>
+        <a class="ref" href="https://github.com/Arshpreet62/Postmen/tree/main/tests" target="_blank" rel="noopener">tests/</a>
+      </li>
+      <li>
+        <h3>Rebuild when the shape changes.</h3>
+        <p>Postmen began as an Express server plus a Vite client. It became a single Next.js app, and the old folders went in one commit.</p>
+        <a class="ref" href="https://github.com/Arshpreet62/Postmen/commit/927d209" target="_blank" rel="noopener">commit 927d209</a>
+      </li>
+      <li>
+        <h3>Write for the person using it.</h3>
+        <p>PlateMate ships with an owner's guide in plain words: where to tap, what the green confirmation means, and how to back up.</p>
+        <a class="ref" href="https://github.com/Arshpreet62/PlateMate/blob/main/docs/OWNER-GUIDE.md" target="_blank" rel="noopener">docs/OWNER-GUIDE.md</a>
+      </li>
+    </ol>
+    <p class="about">I'm working through Full Stack Open from the University of Helsinki and The Odin Project alongside client-style builds. I'm open to full-stack roles and to project work.</p>
+  </section>
+
+  <section class="materials" id="materials" data-sheet="A-300" data-sheet-name="Materials" aria-labelledby="materials-title">
+    <header class="sectionhead" data-rule>
+      <p class="sectionhead__no label">A-300</p>
+      <h2 id="materials-title" class="sectionhead__title">Schedule of materials</h2>
+      <p class="sectionhead__lede">What I build with, and where each one is used. A layer keeps its hatch on every sheet.</p>
+    </header>
+    <table class="schedule" data-materials>
+      <caption class="sr-only">Tools and libraries, grouped by layer, with the projects that use each</caption>
+      <thead><tr><th scope="col">Layer</th><th scope="col">Material</th><th scope="col">Used in</th></tr></thead>
+    </table>
+  </section>
+
+  <section class="register" id="register" data-sheet="A-400" data-sheet-name="Register" aria-labelledby="register-title">
+    <header class="sectionhead" data-rule>
+      <p class="sectionhead__no label">A-400</p>
+      <h2 id="register-title" class="sectionhead__title">Drawing register</h2>
+      <p class="sectionhead__lede">Every repository on GitHub. No. is the order each one was started, Rev. counts commits, and Updated is the last push.</p>
+    </header>
+    <figure class="skyline" data-skyline hidden>
+      <div class="skyline__frame" data-skyline-frame></div>
+      <figcaption class="skyline__cap">
+        <span class="label">Street elevation</span>
+        <span>Each repository is a building, in the order it was started. A floor is a commit, a hatched front is a build, and a lamp on the roof means the site is live.</span>
+        <span class="skyline__readout" data-skyline-readout aria-hidden="true"></span>
+      </figcaption>
+    </figure>
+    <div class="register__tools">
+      <p class="register__count" data-register-count aria-live="polite"></p>
+      <button type="button" class="toggle" data-register-toggle hidden>Show practice repositories</button>
+    </div>
+    <table class="regtable" data-register>
+      <caption class="sr-only">All repositories, newest first</caption>
+      <thead><tr><th scope="col" class="num">No.</th><th scope="col">Title</th><th scope="col">Description</th><th scope="col">Built with</th><th scope="col" class="num">Rev.</th><th scope="col">Updated</th><th scope="col"><span class="sr-only">Live site</span></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <noscript><p class="register__noscript">The full list is on <a href="https://github.com/Arshpreet62?tab=repositories">GitHub</a>.</p></noscript>
+  </section>
+
+  <section class="contact" id="contact" data-sheet="A-500" data-sheet-name="Contact" aria-labelledby="contact-title">
+    <p class="contact__no label">A-500</p>
+    <h2 id="contact-title" class="contact__title">Have something to build?</h2>
+    <div class="stamp" aria-hidden="true" data-stamp>
+      <svg viewBox="0 0 360 150" width="360" height="150">
+        <defs>
+          <filter id="stamp-ink" x="-4%" y="-6%" width="108%" height="112%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" result="grain"/>
+            <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.9 1.75" result="holes"/>
+            <feComposite in="SourceGraphic" in2="holes" operator="in" result="inked"/>
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="warp"/>
+            <feDisplacementMap in="inked" in2="warp" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <g filter="url(#stamp-ink)">
+          <rect x="6" y="6" width="348" height="138" rx="10" fill="none" stroke="currentColor" stroke-width="6"/>
+          <rect x="17" y="17" width="326" height="116" rx="4" fill="none" stroke="currentColor" stroke-width="1.75"/>
+          <text x="180" y="86" text-anchor="middle" fill="currentColor" class="stamp__big">ISSUED FOR HIRE</text>
+          <text x="180" y="117" text-anchor="middle" fill="currentColor" class="stamp__small">ARSHPREET SINGH, FULL STACK</text>
+        </g>
+      </svg>
+    </div>
+    <p class="contact__lede">I'm open to full-stack roles and project work. Email is the quickest way to reach me.</p>
+    <div class="contact__mail">
+      <a class="contact__address" href="mailto:workarshpreet6462@gmail.com">workarshpreet6462@gmail.com</a>
+      <button type="button" class="copy" data-copy="workarshpreet6462@gmail.com" hidden>Copy address</button>
+      <span class="copy__status" role="status" data-copy-status></span>
+    </div>
+    <ul class="contact__links">
+      <li><a href="https://www.linkedin.com/in/arshpreet-singh-8860b8370" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://github.com/Arshpreet62" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://drive.google.com/file/d/1_5ixr1TVAcOyERZ1uyCy6DqvNuNEFjEq/view?usp=drivesdk" target="_blank" rel="noopener">Résumé</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">
+  <dl class="titleblock foot__block">
+    <div><dt>Drawn by</dt><dd>Arshpreet Singh</dd></div>
+    <div><dt>Set in</dt><dd>Archivo, Martian Mono and Anek Gurmukhi</dd></div>
+    <div><dt>Drawn with</dt><dd>WebGL for the portrait, CSS 3D for the stacks</dd></div>
+    <div><dt>Sheet</dt><dd>A-900, 2026</dd></div>
+  </dl>
+  <a class="foot__top" href="#top">Back to top</a>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/portrait.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
