@@ -107,9 +107,9 @@
     <article class="sheet" id="postmen" data-sheet="A-101" data-sheet-name="Postmen" aria-labelledby="postmen-title">
       <header class="sheet__head">
         <h3 id="postmen-title" class="sheet__title">Postmen</h3>
-        <p class="sheet__kind">API workbench, full stack</p>
+        <p class="sheet__kind">API client, full stack</p>
       </header>
-      <p class="sheet__lede">A Postman-style workbench for testing APIs. Sign in, send any request, read the formatted response, and come back to your history later.</p>
+      <p class="sheet__lede">An API client in the browser. Send a request and the response comes back with a postmark: status, round-trip time and size. Sign in and every request is kept in your outbox.</p>
 
       <div class="sheet__draw">
         <figure class="axo" data-axo aria-describedby="postmen-key">
@@ -122,9 +122,9 @@
                     <div class="pl-erd">
                       <div class="pl-table"><span class="pl-table__name">users</span><span>email, unique</span><span>password</span><span>authProvider</span><span>googleId</span><span>name, avatar</span><span>createdAt</span></div>
                       <span class="pl-erd__rel"></span>
-                      <div class="pl-table"><span class="pl-table__name">requesthistories</span><span>user &rarr; users</span><span>endpoint</span><span>method</span><span>request</span><span>response</span><span>timestamp</span></div>
+                      <div class="pl-table"><span class="pl-table__name">requesthistories</span><span>user &rarr; users</span><span>endpoint</span><span>method</span><span>request</span><span>response, durationMs, sizeBytes</span><span>timestamp</span></div>
                     </div>
-                    <span class="pl-note">MongoDB Atlas, through Mongoose</span>
+                    <span class="pl-note">MongoDB Atlas through Mongoose, indexed by user and time</span>
                   </div>
                 </div>
                 <div class="plate" data-fill="cross" style="--i: 1" aria-hidden="true">
@@ -132,10 +132,12 @@
                     <span class="plate__tag"><b>3</b> Auth</span>
                     <div class="pl-auth">
                       <span class="pl-big">JWT</span>
-                      <span>24 h token, 30 days with Remember me</span>
-                      <span>POST /api/auth/refresh signs a new one</span>
+                      <span>HS256, 24 h token, 30 days with Remember me</span>
+                      <span>Refresh never runs past 30 days from sign-in</span>
+                      <span>No secret set, no tokens signed</span>
                       <span>Passwords hashed with bcrypt, 10 rounds</span>
-                      <span>Google ID tokens checked with google-auth-library</span>
+                      <span>Google sign-in only with a verified email</span>
+                      <span>Sign-in and sending are rate-limited</span>
                     </div>
                   </div>
                 </div>
@@ -160,7 +162,7 @@
                 </div>
                 <div class="plate plate--top" style="--i: 3">
                   <div class="plate__face">
-                    <img class="plate__shot" src="assets/img/postmen.webp" width="1400" height="920" loading="lazy" alt="Postmen landing page: Industrial-grade API testing for modern teams, with a live GET request card showing 200 OK">
+                    <img class="plate__shot" src="assets/img/postmen.webp" width="1400" height="920" loading="lazy" alt="Postmen landing page: Send a request. Get a postmark. Airmail envelopes fly out of the dark, with the request workbench below">
                   </div>
                 </div>
               </div>
@@ -177,8 +179,9 @@
       </div>
 
       <div class="sheet__notes">
-        <p>API testing was spread across tools, so auth and request history were hard to keep hold of. Postmen puts the request builder, formatted responses, saved history and usage stats in one signed-in dashboard.</p>
-        <p>It started as a MERN build with a separate Express server and a Vite client, then was rebuilt as one Next.js app whose route handlers talk to MongoDB directly.</p>
+        <p>Every request is a piece of mail. The address is the URL, the headers are the envelope, and a response comes back stamped: delivered, or returned to sender with its 4xx or 5xx. Paste a cURL command from any API docs and it fills in the method, headers and body.</p>
+        <p>The October 2026 rebuild closed what a code review found. The request proxy could reach internal services and cloud metadata; it now checks every address at connect time, refuses private networks, re-checks each redirect, and stops at 20 seconds or 5&nbsp;MB. Sessions fell back to a public default secret; the server now refuses to sign without a real one.</p>
+        <p>It started as a MERN build with a separate Express server and a Vite client, then became one Next.js app whose route handlers talk to MongoDB directly.</p>
         <p class="sheet__links">
           <a href="https://postmen.vercel.app/" target="_blank" rel="noopener">Open postmen.vercel.app</a>
           <a href="https://github.com/Arshpreet62/Postmen" target="_blank" rel="noopener">Read the code</a>
@@ -188,17 +191,17 @@
       <div class="key" id="postmen-key">
         <p class="key__title label">Key</p>
         <ol class="strata">
-          <li class="stratum" data-fill="open"><span class="stratum__no">1</span><span class="stratum__layer">Interface</span><span class="stratum__spec">Next.js 15 App Router, React 19, Tailwind CSS 4, Radix UI</span></li>
-          <li class="stratum" data-fill="diag"><span class="stratum__no">2</span><span class="stratum__layer">Server</span><span class="stratum__spec">Route handlers for auth, requests, history and stats</span></li>
-          <li class="stratum" data-fill="cross"><span class="stratum__no">3</span><span class="stratum__layer">Auth</span><span class="stratum__spec">JWT with refresh, bcrypt-hashed passwords, Google sign-in</span></li>
-          <li class="stratum" data-fill="stipple"><span class="stratum__no">4</span><span class="stratum__layer">Data</span><span class="stratum__spec">MongoDB Atlas through Mongoose: users and request history</span></li>
+          <li class="stratum" data-fill="open"><span class="stratum__no">1</span><span class="stratum__layer">Interface</span><span class="stratum__spec">Next.js 15 App Router, React 19, Tailwind CSS 4, a canvas hero that pauses off screen</span></li>
+          <li class="stratum" data-fill="diag"><span class="stratum__no">2</span><span class="stratum__layer">Server</span><span class="stratum__spec">Route handlers; the proxy refuses private addresses, 20&nbsp;s and 5&nbsp;MB limits</span></li>
+          <li class="stratum" data-fill="cross"><span class="stratum__no">3</span><span class="stratum__layer">Auth</span><span class="stratum__spec">JWT with capped refresh, bcrypt passwords, verified Google sign-in</span></li>
+          <li class="stratum" data-fill="stipple"><span class="stratum__no">4</span><span class="stratum__layer">Data</span><span class="stratum__spec">MongoDB Atlas through Mongoose: users and an outbox, stats counted in one aggregation</span></li>
         </ol>
-        <p class="key__foot">Tested end to end with Playwright. Hosted on Vercel.</p>
+        <p class="key__foot">Tested end to end with Playwright, private-address blocking included. Hosted on Vercel.</p>
       </div>
 
       <dl class="titleblock sheet__block">
-        <div><dt>Revisions</dt><dd>34 commits</dd></div>
-        <div><dt>Issued</dt><dd>Aug 2025 to Feb 2026</dd></div>
+        <div><dt>Revisions</dt><dd>35 commits</dd></div>
+        <div><dt>Issued</dt><dd>Aug 2025 to Oct 2026</dd></div>
         <div><dt>Status</dt><dd>Live</dd></div>
         <div class="titleblock__sheet"><dt>Sheet</dt><dd>A-101</dd></div>
       </dl>
@@ -312,9 +315,9 @@
     <article class="sheet" id="harbour" data-sheet="A-103" data-sheet-name="Harbour Ride" aria-labelledby="harbour-title">
       <header class="sheet__head">
         <h3 id="harbour-title" class="sheet__title">Harbour Ride</h3>
-        <p class="sheet__kind">Booking prototype, maps and email</p>
+        <p class="sheet__kind">Booking app, maps and email</p>
       </header>
-      <p class="sheet__lede">A taxi booking site for Sydney. Riders see a fare on a real route before they book, and each booking lands in the operator's inbox with a reference number.</p>
+      <p class="sheet__lede">Sydney taxi bookings where the page is a taximeter. Pick a trip and a car, the meter counts up to the fare, the price holds for 15 minutes while you add your details, and booking emails both dispatch and the passenger.</p>
 
       <div class="sheet__draw">
         <figure class="axo" data-axo aria-describedby="harbour-key">
@@ -325,21 +328,23 @@
                   <div class="plate__face">
                     <span class="plate__tag"><b>4</b> Mail</span>
                     <div class="pl-mail">
-                      <span class="pl-mail__subject">New ride request HR-&hellip;</span>
-                      <span>Booking reference</span><span>Passenger</span><span>Phone</span><span>Email</span><span>Pickup</span><span>Destination</span><span>When</span><span>Vehicle</span><span>Estimate</span><span>Notes</span>
+                      <span class="pl-mail__subject">New ride HR-&hellip; &middot; when &middot; car</span>
+                      <span>Ref</span><span>When</span><span>Pickup</span><span>Drop-off</span><span>Car</span><span>Estimate</span><span>Flight</span><span>Passenger</span><span>Phone</span><span>Email</span><span>Notes</span>
                     </div>
-                    <span class="pl-note">Sent to the operator with Nodemailer</span>
+                    <span class="pl-note">Resend: one to dispatch, one to the passenger with a calendar file</span>
                   </div>
                 </div>
                 <div class="plate" data-fill="diag" style="--i: 1" aria-hidden="true">
                   <div class="plate__face">
                     <span class="plate__tag"><b>3</b> Server</span>
                     <div class="pl-routes pl-routes--one">
-                      <span><b>POST</b> /api/estimate <i>geocode, route, price, 15 min to book</i></span>
-                      <span><b>POST</b> /api/bookings <i>one booking per quote, then email</i></span>
+                      <span><b>GET</b> /api/places <i>address search, cached at the CDN</i></span>
+                      <span><b>POST</b> /api/estimate <i>route, every car priced, signed quote</i></span>
+                      <span><b>POST</b> /api/bookings <i>checks the signature, sends once</i></span>
+                      <span><b>GET</b> /api/reverse</span>
                       <span><b>GET</b> /api/health</span>
                     </div>
-                    <span class="pl-note">Express, with Nominatim for addresses and OSRM for routes</span>
+                    <span class="pl-note">Next.js route handlers, Photon for addresses and OSRM for routes</span>
                   </div>
                 </div>
                 <div class="plate" data-fill="dots" style="--i: 2" aria-hidden="true">
@@ -351,13 +356,13 @@
                       <circle class="pl-map__pin" cx="52" cy="118" r="6"/>
                       <circle class="pl-map__pin pl-map__pin--end" cx="252" cy="40" r="6"/>
                     </svg>
-                    <span class="pl-note">Leaflet on OpenStreetMap tiles, the route drawn as a line</span>
+                    <span class="pl-note">MapLibre on OpenFreeMap tiles, coloured from the page's own tokens</span>
                   </div>
                 </div>
                 <div class="plate plate--top" style="--i: 3">
                   <div class="plate__face plate__face--pair">
-                    <img class="pair__desk" src="assets/img/harbour-desktop.webp" width="1600" height="1000" loading="lazy" alt="Harbour Ride landing page: Getting there made simple, with an illustration of a red taxi crossing a bridge">
-                    <img class="pair__phone" src="assets/img/harbour-mobile.webp" width="600" height="1298" loading="lazy" alt="The same page on a phone">
+                    <img class="pair__desk" src="assets/img/harbour-desktop.webp" width="1600" height="1000" loading="lazy" alt="Harbour Ride booking page: See the fare before you ride. A seven-segment taximeter reads $65.86 over a map of the route from Sydney Airport to Manly Wharf">
+                    <img class="pair__phone" src="assets/img/harbour-mobile.webp" width="600" height="1298" loading="lazy" alt="The same page on a phone, the meter above the map">
                   </div>
                 </div>
               </div>
@@ -368,15 +373,16 @@
                 <li style="--i: 0"><b>4</b><span>Mail</span></li>
               </ol>
             </div>
-            <figcaption><span class="label">Exploded view</span> The landing page on desktop and phone, over the map, server and mail.</figcaption>
+            <figcaption><span class="label">Exploded view</span> The booking page on desktop and phone, over the map, server and mail.</figcaption>
           </div>
         </figure>
       </div>
 
       <div class="sheet__notes">
-        <p>The server prices every quote and gives it an expiry, so the fare a rider books is the fare they were shown. A quote can be booked only once, which stops a double submit from creating two bookings.</p>
-        <p>If address lookup fails, the estimate falls back to a demo route instead of blocking the form.</p>
+        <p>Pickup, drop-off and price come from a quote the server signed, valid for 15 minutes, so the fare a rider books is the fare they were shown. Nothing is held in server memory, which matters on serverless. The booking reference and the email's idempotency key both come from a hash of the booking, so a double tap sends once.</p>
+        <p>The rebuild fixed the first version's fare formula, which added the minimum on top of every trip: a 10&nbsp;km sedan came to $64 instead of $42. If routing is down, the estimate falls back to a straight line and says so on the meter, the map and the dispatch email.</p>
         <p class="sheet__links">
+          <a href="https://taxi-app-gamma-inky.vercel.app/" target="_blank" rel="noopener">Book a test ride</a>
           <a href="https://github.com/Arshpreet62/taxi_app" target="_blank" rel="noopener">Read the code</a>
         </p>
       </div>
@@ -384,18 +390,18 @@
       <div class="key" id="harbour-key">
         <p class="key__title label">Key</p>
         <ol class="strata">
-          <li class="stratum" data-fill="open"><span class="stratum__no">1</span><span class="stratum__layer">Interface</span><span class="stratum__spec">React on Vite, Radix Select, a date picker that loads only when needed</span></li>
-          <li class="stratum" data-fill="dots"><span class="stratum__no">2</span><span class="stratum__layer">Map</span><span class="stratum__spec">Leaflet with OpenStreetMap tiles and the route drawn as a line</span></li>
-          <li class="stratum" data-fill="diag"><span class="stratum__no">3</span><span class="stratum__layer">Server</span><span class="stratum__spec">Express API: geocoding with Nominatim, routing with OSRM, fare quotes</span></li>
-          <li class="stratum" data-fill="cross"><span class="stratum__no">4</span><span class="stratum__layer">Mail</span><span class="stratum__spec">Nodemailer sends each booking with its reference</span></li>
+          <li class="stratum" data-fill="open"><span class="stratum__no">1</span><span class="stratum__layer">Interface</span><span class="stratum__spec">Next.js 16 App Router, React 19, a seven-segment meter, day and night shift</span></li>
+          <li class="stratum" data-fill="dots"><span class="stratum__no">2</span><span class="stratum__layer">Map</span><span class="stratum__spec">MapLibre GL on OpenFreeMap tiles: tap to set a stop, drag a pin to move it</span></li>
+          <li class="stratum" data-fill="diag"><span class="stratum__no">3</span><span class="stratum__layer">Server</span><span class="stratum__spec">Route handlers: Photon search, OSRM routing, HMAC-signed quotes</span></li>
+          <li class="stratum" data-fill="cross"><span class="stratum__no">4</span><span class="stratum__layer">Mail</span><span class="stratum__spec">Resend and React Email: dispatch, passenger, calendar file</span></li>
         </ol>
-        <p class="key__foot">Quotes expire after 15 minutes, and each one can be booked once.</p>
+        <p class="key__foot">Quotes are signed and expire after 15 minutes. There is no database: bookings live in the dispatch inbox.</p>
       </div>
 
       <dl class="titleblock sheet__block">
-        <div><dt>Revisions</dt><dd>2 commits</dd></div>
-        <div><dt>Issued</dt><dd>Sep 2026</dd></div>
-        <div><dt>Status</dt><dd>Prototype</dd></div>
+        <div><dt>Revisions</dt><dd>11 commits</dd></div>
+        <div><dt>Issued</dt><dd>Sep to Oct 2026</dd></div>
+        <div><dt>Status</dt><dd>Live prototype</dd></div>
         <div class="titleblock__sheet"><dt>Sheet</dt><dd>A-103</dd></div>
       </dl>
     </article>
@@ -439,7 +445,7 @@
       </li>
       <li>
         <h3>Test the paths people depend on.</h3>
-        <p>Postmen has end-to-end tests for the landing page, sign-in and the dashboard, the three places a broken release would hurt most.</p>
+        <p>Postmen has end-to-end tests for the landing page, sign-in and the dashboard, the places a broken release would hurt most, and for the proxy refusing loopback, decimal-IP and cloud-metadata addresses.</p>
         <a class="ref" href="https://github.com/Arshpreet62/Postmen/tree/main/tests" target="_blank" rel="noopener">tests/</a>
       </li>
       <li>

@@ -2,7 +2,7 @@
    and the schedule of materials. main.js renders both into index.html;
    everything else on the page is written directly in index.html.
    Revisions are commit counts and dates are last pushes, read from each
-   repository on 2026-09-29. */
+   repository on 2026-09-29; Postmen and Harbour Ride on 2026-10-08. */
 window.PORTFOLIO = {
   // Every repository, for the drawing register. `no` is the order the
   // repository was created on GitHub (1 = first). `kind: 'build'` rows show by
@@ -13,10 +13,10 @@ window.PORTFOLIO = {
     { no: 27, repo: 'odin-recipes', title: 'Odin Recipes', note: 'Recipe pages, revisiting HTML with The Odin Project.', stack: 'HTML', rev: 4, date: '2026-09-15', kind: 'practice' },
     { no: 26, repo: 'git_test', title: 'Git test', note: 'First commits for The Odin Project Git lesson.', stack: 'Git', rev: 3, date: '2026-09-14', kind: 'practice' },
     { no: 25, repo: 'todo-vanilla', title: 'Todo, vanilla', note: 'To-do app with All, Active and Done filters in plain JavaScript.', stack: 'JavaScript', rev: 1, date: '2026-09-11', kind: 'practice' },
-    { no: 24, repo: 'taxi_app', title: 'Harbour Ride', note: 'Taxi booking prototype: route map, fare quotes, booking emails.', stack: 'React, Leaflet, Express, Nodemailer', rev: 2, date: '2026-09-08', kind: 'build', sheet: 'A-103' },
+    { no: 24, repo: 'taxi_app', title: 'Harbour Ride', note: 'Sydney taxi bookings on a taximeter: signed fare quotes, route map, emails.', stack: 'Next.js, MapLibre, OSRM, Resend', rev: 11, date: '2026-10-08', kind: 'build', live: 'https://taxi-app-gamma-inky.vercel.app/', sheet: 'A-103' },
     { no: 23, repo: 'FullStackOpen-certification', title: 'Full Stack Open', note: 'Coursework from the University of Helsinki course.', stack: 'JavaScript, React, Node', rev: 16, date: '2026-05-03', kind: 'build' },
     { no: 22, repo: 'MY-Portfolio', title: 'Portfolio, 2026 edition one', note: 'Previous portfolio with a MongoDB visitor counter and mailer.', stack: 'Next.js, TypeScript, MongoDB', rev: 14, date: '2026-04-18', kind: 'build' },
-    { no: 19, repo: 'Postmen', title: 'Postmen', note: 'API workbench with accounts, history and usage stats.', stack: 'Next.js, MongoDB, JWT, Playwright', rev: 34, date: '2026-02-17', kind: 'build', live: 'https://postmen.vercel.app/', sheet: 'A-101' },
+    { no: 19, repo: 'Postmen', title: 'Postmen', note: 'API client: postmarked responses, an outbox and usage stats.', stack: 'Next.js, MongoDB, JWT, Playwright', rev: 35, date: '2026-10-08', kind: 'build', live: 'https://postmen.vercel.app/', sheet: 'A-101' },
     { no: 20, repo: 'ZapMail', title: 'ZapMail', note: 'Email app with GitHub and Google sign-in through NextAuth.', stack: 'Next.js, NextAuth, Tailwind', rev: 8, date: '2026-02-13', kind: 'build' },
     { no: 21, repo: '24hr-Story-Feature', title: '24-hour stories', note: 'Story uploads kept in the browser as base64 images.', stack: 'React, TypeScript, Vite', rev: 8, date: '2025-11-25', kind: 'build' },
     { no: 18, repo: 'postman-clone', title: 'Postman clone', note: 'First MERN version of Postmen: Express API, React client.', stack: 'Express, MongoDB, React', rev: 4, date: '2025-08-09', kind: 'build' },
@@ -42,19 +42,19 @@ window.PORTFOLIO = {
   // Schedule of materials: each material and the projects that use it.
   materials: [
     { group: 'Interface', name: 'React', used: ['Postmen', 'PlateMate', 'Harbour Ride', 'TypeSpeed Tester', 'CSS Generator', 'Daily Goals', 'WhatsApp clone', 'Instagram clone'] },
-    { group: 'Interface', name: 'Next.js', used: ['Postmen', 'ZapMail', 'Portfolio'] },
-    { group: 'Interface', name: 'TypeScript', used: ['Postmen', 'ZapMail', 'CSS Generator', '24-hour stories', 'Spotify player clone'] },
-    { group: 'Interface', name: 'Tailwind CSS, Mantine, Radix UI', used: ['Postmen', 'PlateMate', 'Harbour Ride', 'most clones'] },
+    { group: 'Interface', name: 'Next.js', used: ['Postmen', 'Harbour Ride', 'ZapMail', 'Portfolio'] },
+    { group: 'Interface', name: 'TypeScript', used: ['Postmen', 'Harbour Ride', 'ZapMail', 'CSS Generator', '24-hour stories', 'Spotify player clone'] },
+    { group: 'Interface', name: 'Tailwind CSS, Mantine, Radix UI', used: ['Postmen', 'PlateMate', 'most clones'] },
     { group: 'Interface', name: 'Motion', used: ['TypeSpeed Tester', 'CSS Generator', 'Spotify player clone'] },
-    { group: 'Server', name: 'Node.js and Express', used: ['Harbour Ride', 'Postman clone', 'Daily Goals', 'WhatsApp clone', 'Instagram clone'] },
-    { group: 'Server', name: 'Next.js route handlers', used: ['Postmen', 'Portfolio'] },
+    { group: 'Server', name: 'Node.js and Express', used: ['Postman clone', 'Daily Goals', 'WhatsApp clone', 'Instagram clone'] },
+    { group: 'Server', name: 'Next.js route handlers', used: ['Postmen', 'Harbour Ride', 'Portfolio'] },
     { group: 'Server', name: 'JWT, bcrypt, Google OAuth, NextAuth', used: ['Postmen', 'Postman clone', 'ZapMail'] },
-    { group: 'Server', name: 'Nodemailer', used: ['Harbour Ride', 'Portfolio'] },
+    { group: 'Server', name: 'Nodemailer, Resend', used: ['Harbour Ride', 'Portfolio'] },
     { group: 'Data', name: 'MongoDB and Mongoose', used: ['Postmen', 'Postman clone', 'Portfolio'] },
     { group: 'Data', name: 'IndexedDB with Dexie', used: ['PlateMate'] },
-    { group: 'Data', name: 'Leaflet, OSRM, Nominatim', used: ['Harbour Ride'] },
+    { group: 'Data', name: 'MapLibre, OSRM, Photon', used: ['Harbour Ride'] },
     { group: 'Proof', name: 'Playwright', used: ['Postmen'] },
     { group: 'Proof', name: 'Vitest', used: ['PlateMate'] },
-    { group: 'Proof', name: 'Vercel, Render, GitHub Pages', used: ['Postmen', 'Daily Goals', 'TypeSpeed Tester', 'Google homepage clone'] },
+    { group: 'Proof', name: 'Vercel, Render, GitHub Pages', used: ['Postmen', 'Harbour Ride', 'Daily Goals', 'TypeSpeed Tester', 'Google homepage clone'] },
   ],
 };
